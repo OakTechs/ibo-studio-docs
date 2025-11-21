@@ -19,6 +19,14 @@ Every `sections[]` entry defines a slice of your screen surface. The host app st
 - `container`: `none`, `card`, `sheet`, etc. controls chrome.
 - `padding`: overrides root spacing for tight layouts.
 
+### Container Presets
+
+- `none` – edge-to-edge content; great for dense feeds and dashboards.
+- `card` – adds elevation, rounded corners, and default section padding (ideal for forms like "Add Sales").
+- `sheet` – full-width surface with subtle divider lines for wizard-like steps.
+
+Mix containers across sections to signal hierarchy without creating separate screens.
+
 ## Common Section Patterns
 
 - **Feed section** – use `ExpandableCardList`, `Table`, or `Chart` bound to a data source.
