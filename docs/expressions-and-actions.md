@@ -25,6 +25,33 @@ Expressions let you bind data to UI elements and perform lightweight calculation
 - `formula`: arithmetic expression referencing other state keys.
 - `fixed`: optional decimal precision for numeric formatting.
 
+## Field Change Hooks
+
+Two helpers keep state in sync as users interact with form fields:
+
+```json
+{
+  "type": "Dropdown",
+  "props": {
+    "name": "item_id",
+    "label": "Item",
+    "value": "@datasource.catalog.items[].id",
+    "display_value": "@datasource.catalog.items[].name",
+    "onChangeSet": { "rate": "@selected.rate" },
+    "onChange": [
+      { "type": "calc", "target": "amount", "formula": "rate*quantity", "fixed": 2 },
+      { "type": "calc", "target": "netAmount", "formula": "amount - (amount*discount/100)", "fixed": 2 }
+    ]
+  },
+  "data": { "source": "catalog" }
+}
+```
+
+- `onChangeSet` copies properties from the currently selected record (`@selected`) into `state` without writing custom code.
+- `onChange` accepts an array of actions (usually `calc`, `setState`, or `snack`) that run sequentially whenever the field changes.
+
+> Chain `onChangeSet` and `calc` actions to cascade derived values without backend round trips.
+
 ## Submit Actions
 
 Submit actions send state to remote endpoints and orchestrate success/failure effects.

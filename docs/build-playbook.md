@@ -21,6 +21,7 @@ This checklist walks you through the lifecycle of authoring a new config-driven 
 6. **QA**
    - Confirm `required: true` aligns with backend validation.
    - Simulate slow/offline states to ensure cached sources behave.
+   - Scroll through feeds to confirm `pagination` params (`page`, `record`, etc.) produce the expected batches.
 7. **Document**
    - Commit the JSON along with endpoint contracts and release notes.
    - Link back to this guide so future authors follow the same rules.

@@ -29,6 +29,34 @@ Ideal for transactional feeds with quick-glance metadata.
 **Tips**
 - Reserve chips for high-signal fields; too many chips reduce scannability.
 - Use `chipLabels` to translate backend keys into human-friendly text.
+- Pair with `searchStateKey`, `searchFields[]`, and `minSearchLength` when you want in-memory filtering, or leave them out for simple scroll-only feeds.
+- Enable `manualPagination` + `pageSize` if you need the component to request more rows from the server (works well with the `pagination` block in your data source).
+
+## SearchBar
+
+Surface lightweight filtering in the same section as your list.
+
+```json
+{
+  "type": "SearchBar",
+  "props": {
+    "stateKey": "schemeFilter",
+    "placeholder": "Search schemes or codes",
+    "leadingIcon": "search",
+    "showClearButton": true,
+    "filled": true,
+    "borderRadius": 24,
+    "minSearchLength": 3,
+    "padding": { "left": 12, "right": 12, "top": 8, "bottom": 4 }
+  }
+}
+```
+
+- `stateKey` wires the input to `@state.<key>`; reuse that key inside `searchStateKey` on downstream lists.
+- `minSearchLength` defers list filtering until the user types enough characters.
+- `showClearButton`, `leadingIcon`, and `padding` keep the control accessible and inline with your layout density.
+
+> Keep helper text short and let the empty state on your list explain what to try next.
 
 ## SummaryCard
 
@@ -95,6 +123,12 @@ The workhorse for multi-field forms. `columns` controls responsive layout; field
 - Use `prefixIcon` sparingly for quick recognition.
 - Keep hints under 30 characters.
 - Mark computed fields read-only and visually distinct (`filled: true`, muted text color).
+
+### Field Types Cheat-Sheet
+
+- `DateField` – native date picker wired to ISO strings; always pair with `required` when submissions depend on it.
+- `TextField` – workhorse input; use the `keyboard` hint (`number`, `email`, etc.) to summon the right keypad on mobile.
+- `Dropdown` – reference array data via `value`/`display_value` plus a `data.source`; lean on `onChangeSet` + `onChange` (see *Expressions & Actions*) to cascade derived values.
 
 ## Button + Submit Action
 

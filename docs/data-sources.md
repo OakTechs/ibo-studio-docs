@@ -31,6 +31,34 @@
 - `once: true` – fetch once even if multiple components depend on the source.
 - `headers` / `query` / `body` – customize requests as needed.
 
+### Pagination Block
+
+Long feeds can opt into built-in pagination by adding a `pagination` object to any HTTP source:
+
+```json
+"sales": {
+  "type": "http",
+  "method": "GET",
+  "url": "https://API_BASE/sales",
+  "pagination": {
+    "threshold": 50,
+    "pageSize": 50,
+    "clientPageSize": 50,
+    "serverSide": true,
+    "pageParam": "page",
+    "limitParam": "record"
+  }
+}
+```
+
+- `threshold` – when the user scrolls within this many rows of the end, request the next page.
+- `pageSize` – how many records the backend should return per page.
+- `clientPageSize` – optional override for how many records the UI buffers for smooth scrolling.
+- `serverSide` – `true` tells the runtime to send `pageParam`/`limitParam` on each request; `false` keeps pagination purely client-side.
+- `pageParam` / `limitParam` – query-string keys that the backend expects for pagination.
+
+> Keep pagination math consistent between client and server to avoid duplicate or skipped rows. When in doubt, log the outgoing query params in dev builds.
+
 ## Naming Guidelines
 
 - Use verbs for live feeds (`orders`, `reservations`, `invoices`).

@@ -27,7 +27,7 @@ This overview introduces the philosophy behind config-driven screens and highlig
 | `padding` | Global padding (single number or object) | `2`, `{ "top": 8, ... }` |
 | `appBar` | Toolbar tweaks or actions | `{ "centerTitle": true }` |
 | `state` | Initial local state bag | `{}`, or defaults for form fields |
-| `dataSources` | Remote/static data bindings | `http`, `graphql`, `static` |
+| `dataSources` | Remote/static data bindings + optional `pagination` blocks | `http`, `graphql`, `static` |
 | `sections` | Ordered content blocks | Cards, tables, forms |
 | `bottomNav` | Persistent navigation items | `items[] -> sectionId` |
 
