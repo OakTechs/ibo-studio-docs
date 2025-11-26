@@ -129,6 +129,9 @@ The workhorse for multi-field forms. `columns` controls responsive layout; field
 - `DateField` – native date picker wired to ISO strings; always pair with `required` when submissions depend on it.
 - `TextField` – workhorse input; use the `keyboard` hint (`number`, `email`, etc.) to summon the right keypad on mobile.
 - `Dropdown` – reference array data via `value`/`display_value` plus a `data.source`; lean on `onChangeSet` + `onChange` (see *Expressions & Actions*) to cascade derived values.
+- `CheckBox` – boolean selection for agreements, consents, and independent toggles.
+- `RadioGroup` – single selection from 2-7 mutually exclusive options; use `Dropdown` for longer lists.
+- `Switch` – on/off toggle for settings with immediate effect; more prominent than checkboxes.
 
 ## DateField
 
@@ -192,6 +195,202 @@ Future bookings:
 - Use `helperText` to communicate date constraints clearly
 - Match `primaryColor` and `iconColor` to your theme for visual consistency
 - Combine `filled: true` with light `fillColor` for Material Design 3 aesthetic
+
+## CheckBox
+
+Boolean selection with a checkmark for agreements, toggles, and multi-select options.
+
+```json
+{
+  "type": "CheckBox",
+  "props": {
+    "name": "acceptTerms",
+    "label": "I accept the terms and conditions",
+    "required": true
+  }
+}
+```
+
+**Key Properties**
+- `name` – state key for the boolean value (`true`/`false`)
+- `label` – text displayed next to the checkbox
+- `required` – adds asterisk (*) to label for mandatory fields
+- `initialValue` – pre-check the box; supports boolean or `@state`/`@datasource` references
+- `onChange` – trigger actions when checked/unchecked
+
+**Common Patterns**
+
+Terms acceptance:
+```json
+{
+  "name": "consent",
+  "label": "I consent to data processing",
+  "required": true
+}
+```
+
+Multi-select preferences:
+```json
+{
+  "type": "FormGrid",
+  "props": {
+    "columns": 1,
+    "fields": [
+      { "type": "CheckBox", "props": { "name": "newsletter", "label": "Subscribe to newsletter" } },
+      { "type": "CheckBox", "props": { "name": "updates", "label": "Receive product updates" } },
+      { "type": "CheckBox", "props": { "name": "promotions", "label": "Receive promotional offers" } }
+    ]
+  }
+}
+```
+
+**Tips**
+- Use for agreements, consents, and independent boolean choices
+- Store values as `@state.<name>` for form submission
+- Prefer `Switch` for settings with immediate effect; use `CheckBox` for form submissions
+
+## RadioGroup
+
+Mutually exclusive single selection from a visible list of options.
+
+```json
+{
+  "type": "RadioGroup",
+  "props": {
+    "name": "paymentMethod",
+    "label": "Payment Method",
+    "required": true,
+    "options": [
+      { "value": "card", "label": "Credit Card" },
+      { "value": "paypal", "label": "PayPal" },
+      { "value": "bank", "label": "Bank Transfer" }
+    ]
+  }
+}
+```
+
+**Key Properties**
+- `name` – state key storing the selected option's `value`
+- `options` – array of `{ "value": "...", "label": "..." }` objects
+- `initialValue` – pre-select an option by its `value`
+- `required` – mark as mandatory
+- `data` – load options dynamically from a data source
+
+**Dynamic Options**
+
+```json
+{
+  "type": "RadioGroup",
+  "data": {
+    "source": "departments",
+    "valueKey": "id",
+    "labelKey": "name"
+  },
+  "props": {
+    "name": "department",
+    "label": "Select Department"
+  }
+}
+```
+
+**Common Patterns**
+
+Size selection:
+```json
+{
+  "name": "size",
+  "label": "T-Shirt Size",
+  "initialValue": "medium",
+  "options": [
+    { "value": "small", "label": "Small" },
+    { "value": "medium", "label": "Medium" },
+    { "value": "large", "label": "Large" }
+  ]
+}
+```
+
+Rating scale:
+```json
+{
+  "name": "satisfaction",
+  "label": "How satisfied are you?",
+  "required": true,
+  "options": [
+    { "value": "5", "label": "Very Satisfied" },
+    { "value": "4", "label": "Satisfied" },
+    { "value": "3", "label": "Neutral" },
+    { "value": "2", "label": "Dissatisfied" }
+  ]
+}
+```
+
+**Tips**
+- Best for 2-7 options; use `Dropdown` for 8+ options
+- Always mutually exclusive—only one selection allowed
+- Vertical layout improves accessibility
+- Use `onChange` to cascade related field updates
+
+## Switch
+
+Toggle control for on/off states with immediate visual feedback, ideal for settings.
+
+```json
+{
+  "type": "Switch",
+  "props": {
+    "name": "notifications",
+    "label": "Enable Notifications",
+    "activeColor": "#4CAF50"
+  }
+}
+```
+
+**Key Properties**
+- `name` – state key for the boolean value (`true`/`false`)
+- `label` – text displayed next to the switch
+- `activeColor` – hex color when toggled on (e.g., `"#4CAF50"`)
+- `initialValue` – start in on/off state
+- `onChange` – trigger actions on toggle
+
+**Common Patterns**
+
+Settings panel:
+```json
+{
+  "type": "FormGrid",
+  "props": {
+    "columns": 1,
+    "fields": [
+      { "type": "Switch", "props": { "name": "darkMode", "label": "Dark Mode", "activeColor": "#2196F3" } },
+      { "type": "Switch", "props": { "name": "autoSave", "label": "Auto-save Changes", "activeColor": "#2196F3" } },
+      { "type": "Switch", "props": { "name": "soundEffects", "label": "Sound Effects", "activeColor": "#2196F3" } }
+    ]
+  }
+}
+```
+
+With API sync:
+```json
+{
+  "name": "betaFeatures",
+  "label": "Beta Features",
+  "activeColor": "#9C27B0",
+  "onChange": [
+    {
+      "type": "submit",
+      "url": "/api/user/preferences",
+      "method": "PATCH",
+      "body": { "betaFeatures": "@state.betaFeatures" }
+    }
+  ]
+}
+```
+
+**Tips**
+- Use for settings that take immediate effect
+- More prominent than checkboxes—better for feature toggles
+- Consistent `activeColor` creates visual hierarchy
+- Prefer over `CheckBox` when the action is instant (not form-based)
 
 ## Button + Submit Action
 
