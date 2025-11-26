@@ -130,6 +130,69 @@ The workhorse for multi-field forms. `columns` controls responsive layout; field
 - `TextField` – workhorse input; use the `keyboard` hint (`number`, `email`, etc.) to summon the right keypad on mobile.
 - `Dropdown` – reference array data via `value`/`display_value` plus a `data.source`; lean on `onChangeSet` + `onChange` (see *Expressions & Actions*) to cascade derived values.
 
+## DateField
+
+Native date picker with extensive customization options for forms and data entry.
+
+```json
+{
+  "type": "DateField",
+  "props": {
+    "name": "sale_date",
+    "label": "Sale Date",
+    "required": true,
+    "displayFormat": "long",
+    "filled": true,
+    "prefixIcon": "event",
+    "suffixIcon": "calendar_today",
+    "hint": "Select sale date",
+    "minDate": "2024-01-01",
+    "maxDate": "today",
+    "borderRadius": 12,
+    "primaryColor": "#6750A4"
+  }
+}
+```
+
+**Key Properties**
+- `displayFormat` – controls visual presentation: `"default"` (ISO), `"us"` (MM/dd/yyyy), `"eu"` (dd/MM/yyyy), `"long"` (November 26, 2024), `"short"` (Nov 26, 2024), or `"custom"` with `customFormat` pattern
+- `minDate` / `maxDate` – constrain selectable range; use `"today"` or ISO strings like `"2024-01-01"`
+- `yearRange` – years before/after current (default: 10); set to 100 for birth dates
+- `filled` – enable background fill for modern appearance
+- `borderRadius` – corner roundness (8-16 typical); pair with `borderColor` and `focusedBorderColor`
+- `primaryColor` – theme color for calendar UI and selection highlights
+- `prefixIcon` / `suffixIcon` – Material icons (`event`, `calendar_today`, `date_range`)
+
+**Common Patterns**
+
+Birth date (past only):
+```json
+{
+  "name": "birth_date",
+  "label": "Date of Birth",
+  "maxDate": "today",
+  "yearRange": 100,
+  "displayFormat": "long"
+}
+```
+
+Future bookings:
+```json
+{
+  "name": "appointment_date",
+  "label": "Appointment Date",
+  "minDate": "today",
+  "yearRange": 1,
+  "helperText": "Available dates: Mon-Fri"
+}
+```
+
+**Tips**
+- Date values always stored as ISO strings (yyyy-MM-dd) regardless of display format
+- Use `helperText` to communicate date constraints clearly
+- Match `primaryColor` and `iconColor` to your theme for visual consistency
+- Combine `filled: true` with light `fillColor` for Material Design 3 aesthetic
+
 ## Button + Submit Action
 
 ```json
