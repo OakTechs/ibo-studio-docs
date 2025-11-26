@@ -27,6 +27,7 @@ Ideal for transactional feeds with quick-glance metadata.
 ```
 
 **Tips**
+
 - Reserve chips for high-signal fields; too many chips reduce scannability.
 - Use `chipLabels` to translate backend keys into human-friendly text.
 - Pair with `searchStateKey`, `searchFields[]`, and `minSearchLength` when you want in-memory filtering, or leave them out for simple scroll-only feeds.
@@ -109,8 +110,18 @@ The workhorse for multi-field forms. `columns` controls responsive layout; field
           "label": "Quantity",
           "keyboard": "number",
           "onChange": [
-            { "type": "calc", "target": "amount", "formula": "rate*quantity", "fixed": 2 },
-            { "type": "calc", "target": "netAmount", "formula": "amount - (amount*discount/100)", "fixed": 2 }
+            {
+              "type": "calc",
+              "target": "amount",
+              "formula": "rate*quantity",
+              "fixed": 2
+            },
+            {
+              "type": "calc",
+              "target": "netAmount",
+              "formula": "amount - (amount*discount/100)",
+              "fixed": 2
+            }
           ]
         }
       }
@@ -120,6 +131,7 @@ The workhorse for multi-field forms. `columns` controls responsive layout; field
 ```
 
 **Field Guidelines**
+
 - Use `prefixIcon` sparingly for quick recognition.
 - Keep hints under 30 characters.
 - Mark computed fields read-only and visually distinct (`filled: true`, muted text color).
@@ -128,10 +140,133 @@ The workhorse for multi-field forms. `columns` controls responsive layout; field
 
 - `DateField` – native date picker wired to ISO strings; always pair with `required` when submissions depend on it.
 - `TextField` – workhorse input; use the `keyboard` hint (`number`, `email`, etc.) to summon the right keypad on mobile.
-- `Dropdown` – reference array data via `value`/`display_value` plus a `data.source`; lean on `onChangeSet` + `onChange` (see *Expressions & Actions*) to cascade derived values.
+- `Dropdown` – reference array data via `value`/`display_value` plus a `data.source`; lean on `onChangeSet` + `onChange` (see _Expressions & Actions_) to cascade derived values.
 - `CheckBox` – boolean selection for agreements, consents, and independent toggles.
 - `RadioGroup` – single selection from 2-7 mutually exclusive options; use `Dropdown` for longer lists.
 - `Switch` – on/off toggle for settings with immediate effect; more prominent than checkboxes.
+
+## Dropdown
+
+Customizable select input with extensive data binding and styling options.
+
+```json
+{
+  "type": "Dropdown",
+  "props": {
+    "name": "item_id",
+    "label": "Item",
+    "required": true,
+    "hint": "Choose an item",
+    "valueKey": "id",
+    "labelKey": "name"
+  },
+  "data": { "source": "catalog" }
+}
+```
+
+**Key Properties**
+
+- `name` – state key for the selected value
+- `valueKey` / `labelKey` – map data fields to option value/display (defaults: `"id"` / `"name"`)
+- `value` / `display_value` – dynamic expressions for custom data mapping (e.g., `"@datasource.items[].product_id"`)
+- `onChangeSet` – auto-populate state from selected item's fields
+- `onChange` – trigger actions on selection (fetch dependent data, calculations, etc.)
+- `filled` – enable background fill for modern appearance
+- `borderRadius` – corner roundness (8-12 typical)
+- `contentPadding` – inner spacing; use object for granular control
+- `isDense` – reduce height for compact layouts
+- `menuMaxHeight` – limit dropdown menu height (useful on mobile)
+
+**Data Binding Methods**
+
+Static options:
+
+```json
+{
+  "name": "status",
+  "label": "Status",
+  "options": [
+    { "value": "active", "label": "Active" },
+    { "value": "inactive", "label": "Inactive" }
+  ]
+}
+```
+
+Data source with nested path:
+
+```json
+{
+  "name": "trainer_id",
+  "label": "Trainer",
+  "data": {
+    "source": "masterData",
+    "path": "trainers"
+  }
+}
+```
+
+Custom expressions:
+
+```json
+{
+  "name": "horse_id",
+  "label": "Horse",
+  "value": "@datasource.horses[].horse_id",
+  "display_value": "@datasource.horses[].horse_name",
+  "data": { "source": "horses" }
+}
+```
+
+**Common Patterns**
+
+Cascading dropdowns:
+
+```json
+{
+  "name": "city_id",
+  "label": "City",
+  "onChange": [
+    {
+      "type": "fetch",
+      "target": "districts",
+      "url": "/api/districts?cityId={city_id}"
+    },
+    { "type": "setState", "values": { "district_id": null } }
+  ],
+  "data": { "source": "cities" }
+}
+```
+
+Auto-populate related fields:
+
+```json
+{
+  "name": "product_id",
+  "label": "Product",
+  "onChangeSet": {
+    "price": "unit_price",
+    "sku": "product_sku",
+    "stock": "available_stock"
+  },
+  "data": { "source": "products" }
+}
+```
+
+**Styling Tips**
+
+- Match `fillColor` and `borderRadius` to your form theme
+- Use `focusedBorderColor` to highlight active selection
+- Set `labelWeight: "w500"` for emphasis
+- Combine `filled: true` with light `fillColor` for Material Design 3 aesthetic
+- Use `isDense: true` in compact layouts or mobile forms
+
+**Tips**
+
+- Use for 8+ options; prefer `RadioGroup` for 2-7 options
+- Always provide `name` for state management
+- Leverage `onChangeSet` to reduce manual `onChange` actions
+- Set `menuMaxHeight` (e.g., 300) to prevent tall menus on mobile
+- Use `hint` to guide users when no value is selected
 
 ## DateField
 
@@ -158,6 +293,7 @@ Native date picker with extensive customization options for forms and data entry
 ```
 
 **Key Properties**
+
 - `displayFormat` – controls visual presentation: `"default"` (ISO), `"us"` (MM/dd/yyyy), `"eu"` (dd/MM/yyyy), `"long"` (November 26, 2024), `"short"` (Nov 26, 2024), or `"custom"` with `customFormat` pattern
 - `minDate` / `maxDate` – constrain selectable range; use `"today"` or ISO strings like `"2024-01-01"`
 - `yearRange` – years before/after current (default: 10); set to 100 for birth dates
@@ -169,6 +305,7 @@ Native date picker with extensive customization options for forms and data entry
 **Common Patterns**
 
 Birth date (past only):
+
 ```json
 {
   "name": "birth_date",
@@ -180,6 +317,7 @@ Birth date (past only):
 ```
 
 Future bookings:
+
 ```json
 {
   "name": "appointment_date",
@@ -191,6 +329,7 @@ Future bookings:
 ```
 
 **Tips**
+
 - Date values always stored as ISO strings (yyyy-MM-dd) regardless of display format
 - Use `helperText` to communicate date constraints clearly
 - Match `primaryColor` and `iconColor` to your theme for visual consistency
@@ -212,15 +351,17 @@ Boolean selection with a checkmark for agreements, toggles, and multi-select opt
 ```
 
 **Key Properties**
+
 - `name` – state key for the boolean value (`true`/`false`)
 - `label` – text displayed next to the checkbox
-- `required` – adds asterisk (*) to label for mandatory fields
+- `required` – adds asterisk (\*) to label for mandatory fields
 - `initialValue` – pre-check the box; supports boolean or `@state`/`@datasource` references
 - `onChange` – trigger actions when checked/unchecked
 
 **Common Patterns**
 
 Terms acceptance:
+
 ```json
 {
   "name": "consent",
@@ -230,21 +371,32 @@ Terms acceptance:
 ```
 
 Multi-select preferences:
+
 ```json
 {
   "type": "FormGrid",
   "props": {
     "columns": 1,
     "fields": [
-      { "type": "CheckBox", "props": { "name": "newsletter", "label": "Subscribe to newsletter" } },
-      { "type": "CheckBox", "props": { "name": "updates", "label": "Receive product updates" } },
-      { "type": "CheckBox", "props": { "name": "promotions", "label": "Receive promotional offers" } }
+      {
+        "type": "CheckBox",
+        "props": { "name": "newsletter", "label": "Subscribe to newsletter" }
+      },
+      {
+        "type": "CheckBox",
+        "props": { "name": "updates", "label": "Receive product updates" }
+      },
+      {
+        "type": "CheckBox",
+        "props": { "name": "promotions", "label": "Receive promotional offers" }
+      }
     ]
   }
 }
 ```
 
 **Tips**
+
 - Use for agreements, consents, and independent boolean choices
 - Store values as `@state.<name>` for form submission
 - Prefer `Switch` for settings with immediate effect; use `CheckBox` for form submissions
@@ -270,6 +422,7 @@ Mutually exclusive single selection from a visible list of options.
 ```
 
 **Key Properties**
+
 - `name` – state key storing the selected option's `value`
 - `options` – array of `{ "value": "...", "label": "..." }` objects
 - `initialValue` – pre-select an option by its `value`
@@ -296,6 +449,7 @@ Mutually exclusive single selection from a visible list of options.
 **Common Patterns**
 
 Size selection:
+
 ```json
 {
   "name": "size",
@@ -310,6 +464,7 @@ Size selection:
 ```
 
 Rating scale:
+
 ```json
 {
   "name": "satisfaction",
@@ -325,6 +480,7 @@ Rating scale:
 ```
 
 **Tips**
+
 - Best for 2-7 options; use `Dropdown` for 8+ options
 - Always mutually exclusive—only one selection allowed
 - Vertical layout improves accessibility
@@ -346,6 +502,7 @@ Toggle control for on/off states with immediate visual feedback, ideal for setti
 ```
 
 **Key Properties**
+
 - `name` – state key for the boolean value (`true`/`false`)
 - `label` – text displayed next to the switch
 - `activeColor` – hex color when toggled on (e.g., `"#4CAF50"`)
@@ -355,21 +512,44 @@ Toggle control for on/off states with immediate visual feedback, ideal for setti
 **Common Patterns**
 
 Settings panel:
+
 ```json
 {
   "type": "FormGrid",
   "props": {
     "columns": 1,
     "fields": [
-      { "type": "Switch", "props": { "name": "darkMode", "label": "Dark Mode", "activeColor": "#2196F3" } },
-      { "type": "Switch", "props": { "name": "autoSave", "label": "Auto-save Changes", "activeColor": "#2196F3" } },
-      { "type": "Switch", "props": { "name": "soundEffects", "label": "Sound Effects", "activeColor": "#2196F3" } }
+      {
+        "type": "Switch",
+        "props": {
+          "name": "darkMode",
+          "label": "Dark Mode",
+          "activeColor": "#2196F3"
+        }
+      },
+      {
+        "type": "Switch",
+        "props": {
+          "name": "autoSave",
+          "label": "Auto-save Changes",
+          "activeColor": "#2196F3"
+        }
+      },
+      {
+        "type": "Switch",
+        "props": {
+          "name": "soundEffects",
+          "label": "Sound Effects",
+          "activeColor": "#2196F3"
+        }
+      }
     ]
   }
 }
 ```
 
 With API sync:
+
 ```json
 {
   "name": "betaFeatures",
@@ -387,6 +567,7 @@ With API sync:
 ```
 
 **Tips**
+
 - Use for settings that take immediate effect
 - More prominent than checkboxes—better for feature toggles
 - Consistent `activeColor` creates visual hierarchy
@@ -413,7 +594,15 @@ With API sync:
       },
       "onSuccess": [
         { "type": "snack", "message": "Order submitted" },
-        { "type": "setState", "values": { "quantity": "", "discount": "", "amount": "", "netAmount": "" } }
+        {
+          "type": "setState",
+          "values": {
+            "quantity": "",
+            "discount": "",
+            "amount": "",
+            "netAmount": ""
+          }
+        }
       ]
     }
   }
@@ -421,6 +610,7 @@ With API sync:
 ```
 
 Actions support composable side effects:
+
 - `snack` – toast/snackbar notifications.
 - `setState` – reset form fields or prime defaults.
 - `navigate` – move to another section or screen.
@@ -428,6 +618,7 @@ Actions support composable side effects:
 ## Extending the Library
 
 When introducing new component types:
+
 - Document required props so linting rules stay reliable.
 - Provide sensible defaults (labels, icon sets) to reduce JSON verbosity.
 - Keep visual style tokens centralized to maintain brand consistency.
