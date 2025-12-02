@@ -1,6 +1,87 @@
 # Component Catalogue
 
-Mix and match components inside each section’s `components[]` array. Every component defines a `type`, `props`, and optional `data` binding. Below are the most common building blocks.
+Mix and match components inside each section's `components[]` array. Every component defines a `type`, `props`, and optional `data` binding. Below are the most common building blocks.
+
+## CardImage
+
+Display content in visually rich card layouts with images, text, and customizable styling.
+
+```json
+{
+  "type": "CardImage",
+  "props": {
+    "imageUrl": "https://example.com/product.jpg",
+    "title": "Premium Headphones",
+    "body": "High-quality wireless headphones with noise cancellation",
+    "caption": "$299.99",
+    "imagePosition": "top",
+    "alignment": "center",
+    "imageSize": 200,
+    "cardElevation": 6,
+    "borderRadius": 16,
+    "titleStyle": {
+      "fontSize": 20,
+      "fontWeight": "bold",
+      "color": "#1a1a1a"
+    },
+    "bodyStyle": {
+      "fontSize": 14,
+      "color": "#666666"
+    },
+    "captionStyle": {
+      "fontSize": 18,
+      "fontWeight": "bold",
+      "color": "#2196F3"
+    }
+  }
+}
+```
+
+**Key Properties**
+
+- `imageUrl` – URL of the image to display (supports `@state`, `@datasource`, `@item` bindings)
+- `title`, `body`, `caption` – text content with independent styling
+- `imagePosition` – `"top"`, `"bottom"`, `"left"`, or `"right"`
+- `imageFit` – `"cover"` (fills space), `"contain"` (fits fully), or `"fill"` (stretches)
+- `imageSize` – height in pixels for full-width images or width/height for square images
+- `alignment` – `"left"`, `"center"`, or `"right"` for text alignment
+- `padding` – number for uniform padding or object `{ left, right, top, bottom }`
+- `cardColor`, `cardElevation`, `borderRadius` – visual card styling
+
+**Multi-Card Grid**
+
+```json
+{
+  "type": "CardImage",
+  "props": {
+    "cardsPerRow": 2,
+    "spacing": 16,
+    "cards": [
+      {
+        "imageUrl": "https://example.com/product1.jpg",
+        "title": "Product 1",
+        "body": "Description",
+        "caption": "$49.99"
+      },
+      {
+        "imageUrl": "https://example.com/product2.jpg",
+        "title": "Product 2",
+        "body": "Description",
+        "caption": "$59.99"
+      }
+    ]
+  }
+}
+```
+
+**Tips**
+
+- Use `imageFit: "cover"` for consistent card sizes in grids
+- Keep titles concise (1-2 lines) for better scannability
+- Leverage `titleStyle`, `bodyStyle`, `captionStyle` for typography control
+- Position images `"left"` or `"right"` for profile/contact cards
+- Use `cardsPerRow: 2` for product grids on mobile; keep spacing 12-16px
+- Perfect for product listings, user profiles, blog posts, team members, and portfolio items
 
 ## ExpandableCardList
 
@@ -614,11 +695,3 @@ Actions support composable side effects:
 - `snack` – toast/snackbar notifications.
 - `setState` – reset form fields or prime defaults.
 - `navigate` – move to another section or screen.
-
-## Extending the Library
-
-When introducing new component types:
-
-- Document required props so linting rules stay reliable.
-- Provide sensible defaults (labels, icon sets) to reduce JSON verbosity.
-- Keep visual style tokens centralized to maintain brand consistency.
