@@ -162,6 +162,87 @@ Place summary cards before forms so users see totals update live.
 
 `Text` uses style tokens (`title`, `subtitle`, `body`, `caption`) to keep typography consistent. Pair with `Divider` to separate logical groups without overwhelming the layout.
 
+## TextField
+
+The workhorse text input component that supports various keyboard types, validation, and onChange actions.
+
+```json
+{
+  "type": "TextField",
+  "props": {
+    "name": "quantity",
+    "label": "Quantity",
+    "required": true,
+    "keyboard": "number",
+    "hint": "Enter quantity",
+    "helper": "Minimum order: 1 unit",
+    "prefixIcon": "shopping_cart",
+    "filled": true,
+    "onChange": [
+      {
+        "type": "calc",
+        "target": "amount",
+        "formula": "rate*quantity",
+        "fixed": 2
+      }
+    ]
+  }
+}
+```
+
+**Key Properties**
+
+- `name` – unique state key for the field value
+- `label` – display label above the field
+- `keyboard` – `"text"` (default), `"number"`, `"email"`, `"phone"`, `"url"` for optimized mobile keyboards
+- `hint` – placeholder text shown when empty
+- `helper` – helper text displayed below the field
+- `prefixIcon` / `suffixIcon` – Material icons for visual context
+- `required` – adds asterisk (\*) to label
+- `readOnly` – makes field read-only
+- `filled` – enables gray background fill (default: true)
+- `onChange` – array of actions triggered when value changes
+
+**Common Patterns**
+
+Email input:
+```json
+{
+  "name": "email",
+  "label": "Email Address",
+  "required": true,
+  "keyboard": "email",
+  "hint": "you@example.com",
+  "prefixIcon": "email",
+  "helper": "We'll never share your email"
+}
+```
+
+Numeric calculation:
+```json
+{
+  "name": "discount",
+  "label": "Discount %",
+  "keyboard": "number",
+  "onChange": [
+    {
+      "type": "calc",
+      "target": "netAmount",
+      "formula": "amount - (amount*discount/100)",
+      "fixed": 2
+    }
+  ]
+}
+```
+
+**Tips**
+
+- Always set appropriate `keyboard` type for better mobile UX
+- Use `helper` text for format hints or constraints
+- Keep `hint` text concise (under 30 characters)
+- Mark computed/calculated fields as `readOnly: true`
+- Leverage `onChange` for real-time calculations and validations
+
 ## FormGrid
 
 The workhorse for multi-field forms. `columns` controls responsive layout; fields stack automatically on smaller breakpoints.
