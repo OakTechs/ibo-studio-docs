@@ -243,6 +243,54 @@ Numeric calculation:
 - Mark computed/calculated fields as `readOnly: true`
 - Leverage `onChange` for real-time calculations and validations
 
+## RichTextEditor
+
+The `RichTextEditor` component provides a flexible input field for creating formatted text using a markdown-like syntax. It includes a toolbar for common formatting options (bold, italic, underline) and outputs a string.
+
+```json
+{
+  "type": "RichTextEditor",
+  "props": {
+    "name": "content",
+    "label": "Description",
+    "initialValue": "This is some **bold** and *italic* text."
+  }
+}
+```
+
+**Key Properties**
+
+- `name` – (Required) A unique identifier for the state key where the rich text content will be stored.
+- `label` – (Optional) The display label shown above the editor.
+- `initialValue` – (Optional) The initial text content to populate the editor.
+
+**Supported Formatting**
+
+The editor supports the following markdown-like syntax:
+
+-   **Bold:** Wrap text with double asterisks (e.g., `**bold text**`)
+-   *Italic:* Wrap text with single asterisks (e.g., `*italic text*`)
+-   <u>Underline:</u> Wrap text with double underscores (e.g., `__underlined text__`)
+
+**Example Usage**
+
+```json
+{
+  "type": "RichTextEditor",
+  "props": {
+    "name": "productDescription",
+    "label": "Product Description",
+    "initialValue": "This product is **innovative** and *highly recommended* for its __durability__."
+  }
+}
+```
+
+**Tips**
+
+- The output of the `RichTextEditor` is a string with markdown-like syntax; ensure your display mechanism that can parse and render this format.
+- Use the `label` prop to provide clear instructions to the user.
+- The `name` prop is crucial for binding the editor's content to the application's state.
+
 ## FormGrid
 
 The workhorse for multi-field forms. `columns` controls responsive layout; fields stack automatically on smaller breakpoints.
