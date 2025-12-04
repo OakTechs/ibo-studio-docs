@@ -85,7 +85,7 @@ Display content in visually rich card layouts with images, text, and customizabl
 
 ## ExpandableCardList
 
-Ideal for transactional feeds with quick-glance metadata.
+Display data in expandable cards with search, pagination, and rich metadata. Each card shows summary information when collapsed and reveals all item fields in a key-value table when expanded.
 
 ```json
 {
@@ -107,12 +107,98 @@ Ideal for transactional feeds with quick-glance metadata.
 }
 ```
 
+**Key Properties**
+
+- `itemTitle` – field name for card's main title (default: `"title"`)
+- `itemSubtitle` – field name for card's subtitle (default: `"subtitle"`)
+- `leadingKey` – field for leading avatar/indicator (circular badge on left)
+- `trailingKey` – field for trailing badge/chip (colored chip on right)
+- `headerChips` – array of field names to display as chips below subtitle
+- `chipLabels` – custom labels for chip fields (maps field names to display text)
+
+**Search Integration**
+
+```json
+{
+  "type": "ExpandableCardList",
+  "props": {
+    "itemTitle": "name",
+    "itemSubtitle": "breed",
+    "searchStateKey": "horseSearch",
+    "searchFields": ["owner", "trainer", "notes"],
+    "minSearchLength": 2,
+    "emptySearchMessage": "No horses match your search"
+  },
+  "data": { "source": "horses" }
+}
+```
+
+- `searchStateKey` – state key containing search query (pair with `SearchBar` using same key)
+- `searchFields` – additional fields to search (auto-searches title, subtitle, leading, trailing, chips)
+- `minSearchLength` – minimum characters before filtering activates (default: 3)
+- `scrollToTopOnSearch` – auto-scroll to top when search changes (default: true)
+
+**Pagination**
+
+```json
+{
+  "type": "ExpandableCardList",
+  "props": {
+    "manualPagination": true,
+    "pageSize": 25,
+    "autoLoadMoreOnScroll": true,
+    "manualKey": "orders_pagination"
+  },
+  "data": { "source": "orders" }
+}
+```
+
+- `manualPagination` – enable client-side pagination (default: true)
+- `pageSize` – items per page (default: 50)
+- `autoLoadMoreOnScroll` – load more when scrolling near bottom (default: true)
+- `manualKey` – unique ID for pagination state (auto-generated if omitted)
+
+**Action Buttons**
+
+```json
+{
+  "type": "ExpandableCardList",
+  "props": {
+    "itemTitle": "name",
+    "actionButton": {
+      "text": "View Details",
+      "icon": "arrow_forward",
+      "visibleKey": "canEdit",
+      "action": {
+        "type": "openSchema",
+        "url": "/horse-details",
+        "initialState": { "horseId": "@item.id" }
+      }
+    }
+  },
+  "data": { "source": "horses" }
+}
+```
+
+- `actionButton.text` – static button label (or use `labelKey` for dynamic label from item field)
+- `actionButton.icon` – Material icon name (`send`, `edit`, `save`, etc.)
+- `actionButton.visible` – static visibility (or use `visibleKey` for dynamic from item field)
+- `actionButton.action` – action to execute when clicked
+
+**Styling**
+
+- `horizontalMargin` – horizontal margin for each card (default: 8)
+- `verticalMargin` – vertical margin between cards (default: 4)
+
 **Tips**
 
-- Reserve chips for high-signal fields; too many chips reduce scannability.
-- Use `chipLabels` to translate backend keys into human-friendly text.
-- Pair with `searchStateKey`, `searchFields[]`, and `minSearchLength` when you want in-memory filtering, or leave them out for simple scroll-only feeds.
-- Enable `manualPagination` + `pageSize` if you need the component to request more rows from the server (works well with the `pagination` block in your data source).
+- Reserve chips for high-signal fields; too many chips reduce scannability
+- Use `chipLabels` to translate backend keys into human-friendly text
+- Pair with `SearchBar` component using matching `searchStateKey` for filtering
+- Set unique `manualKey` when using multiple lists with the same data source
+- All item fields display in alphabetical key-value table when card expands
+- Use `visibleKey` on action buttons to show contextual actions per item
+- Keep `pageSize` between 15-50 for optimal performance on mobile
 
 ## SearchBar
 
@@ -206,6 +292,7 @@ The workhorse text input component that supports various keyboard types, validat
 **Common Patterns**
 
 Email input:
+
 ```json
 {
   "name": "email",
@@ -219,6 +306,7 @@ Email input:
 ```
 
 Numeric calculation:
+
 ```json
 {
   "name": "discount",
@@ -268,9 +356,9 @@ The `RichTextEditor` component provides a flexible input field for creating form
 
 The editor supports the following markdown-like syntax:
 
--   **Bold:** Wrap text with double asterisks (e.g., `**bold text**`)
--   *Italic:* Wrap text with single asterisks (e.g., `*italic text*`)
--   <u>Underline:</u> Wrap text with double underscores (e.g., `__underlined text__`)
+- **Bold:** Wrap text with double asterisks (e.g., `**bold text**`)
+- _Italic:_ Wrap text with single asterisks (e.g., `*italic text*`)
+- <u>Underline:</u> Wrap text with double underscores (e.g., `__underlined text__`)
 
 **Example Usage**
 
