@@ -379,6 +379,38 @@ The editor supports the following markdown-like syntax:
 - Use the `label` prop to provide clear instructions to the user.
 - The `name` prop is crucial for binding the editor's content to the application's state.
 
+## ChipSelect
+
+A flexible component that allows users to make single or multiple selections from a set of chips. It is ideal for filtering, tagging, or selecting options in a visually engaging way.
+
+```json
+{
+  "type": "chipselect",
+  "props": {
+    "name": "selectedFruits",
+    "label": "Select your favorite fruits",
+    "options": [
+      {"label": "Apple", "value": "apple"},
+      {"label": "Banana", "value": "banana"},
+      {"label": "Orange", "value": "orange"}
+    ],
+    "initialValue": ["apple"],
+    "maxSelection": 2,
+    "selectedColor": "#FF5733"
+  }
+}
+```
+
+**Key Properties**
+
+*   `name` - (Required) The state key to store the list of selected values.
+*   `label` - (Optional) A text label displayed above the chips.
+*   `options` - (Required) A list of objects, each with a `label` (display text) and a `value` (stored value).
+*   `initialValue` - (Optional) A list of values to be pre-selected.
+*   `maxSelection` - (Optional) The maximum number of chips that can be selected. If set to `1`, it behaves like a radio button group. If omitted, multiple selections are allowed.
+*   `selectedColor` - (Optional) The background color of the selected chips (hex string).
+*   `wrap` - (Optional) A boolean that determines if the chips should wrap to the next line. Defaults to `true`. If `false`, the chips are laid out in a single horizontally scrollable row.
+
 ## FormGrid
 
 The workhorse for multi-field forms. `columns` controls responsive layout; fields stack automatically on smaller breakpoints.
