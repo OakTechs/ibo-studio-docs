@@ -411,6 +411,39 @@ A flexible component that allows users to make single or multiple selections fro
 *   `selectedColor` - (Optional) The background color of the selected chips (hex string).
 *   `wrap` - (Optional) A boolean that determines if the chips should wrap to the next line. Defaults to `true`. If `false`, the chips are laid out in a single horizontally scrollable row.
 
+## FloatingActionButton
+
+A circular or extended button for a primary action in the application.
+
+```json
+{
+  "type": "FloatingActionButton",
+  "props": {
+    "onPressed": { "type": "openSchema", "schema": "/full-path" },
+    "icon": "add",
+    "label": "Add Order",
+    "backgroundColor": "#FFC107",
+    "foregroundColor": "#000000",
+    "elevation": 8.0
+  }
+}
+```
+
+**Key Properties**
+
+- `onPressed` – action to perform when the button is pressed. Can be a navigation, submit, or other action.
+- `icon` – the name of the Material icon to display.
+- `label` – optional text to display, creating an extended FAB.
+- `backgroundColor` – the background color of the button.
+- `foregroundColor` – the color of the icon and label.
+- `elevation` – the z-coordinate at which to place this button.
+
+**Tips**
+
+- Use a FAB for the most common or primary action on a screen.
+- An extended FAB with a `label` can provide more context than an icon alone.
+- Limit each screen to a single FAB to avoid visual clutter.
+
 ## FormGrid
 
 The workhorse for multi-field forms. `columns` controls responsive layout; fields stack automatically on smaller breakpoints.
