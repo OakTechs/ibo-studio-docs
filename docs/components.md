@@ -226,6 +226,202 @@ Surface lightweight filtering in the same section as your list.
 
 > Keep helper text short and let the empty state on your list explain what to try next.
 
+## TabContainer
+
+Organize content into switchable tabs with support for icons, badges, and swipe gestures.
+
+```json
+{
+  "type": "tabContainer",
+  "props": {
+    "initialIndex": 0,
+    "height": 400,
+    "indicatorStyle": "pill",
+    "tabs": [
+      {
+        "label": "Overview",
+        "icon": "home",
+        "content": {
+          "type": "text",
+          "props": {
+            "text": "Welcome to the overview section!"
+          }
+        }
+      },
+      {
+        "label": "Messages",
+        "icon": "mail",
+        "badge": "5",
+        "badgeColor": "#FF5252",
+        "badgeTextColor": "#FFFFFF",
+        "content": {
+          "type": "text",
+          "props": {
+            "text": "You have 5 new messages"
+          }
+        }
+      },
+      {
+        "label": "Settings",
+        "icon": "settings",
+        "content": {
+          "type": "column",
+          "props": {
+            "children": [
+              {
+                "type": "text",
+                "props": {
+                  "text": "Settings content here"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+**Key Properties**
+
+- `tabs` – array of tab objects; each requires `label` and `content`
+- `initialIndex` – which tab to show initially (0-based; default: 0); bind to `@state` for programmatic control
+- `height` – content area height in pixels (default: 360)
+- `isScrollable` – enable horizontal scrolling for many tabs (default: false)
+- `swipeable` – allow swipe gestures to change tabs (default: true); disable for step-by-step flows
+
+**Tab Object**
+
+Each tab supports:
+
+- `label` – text shown on the tab button (required)
+- `content` – widget/component to display when active (required)
+- `icon` – Material icon name (`mail`, `notifications`, `person`, etc.)
+- `badge` – small text badge (e.g., notification count) shown on tab
+- `badgeColor` / `badgeTextColor` – badge styling (hex format)
+
+**Indicator Styles**
+
+Pill style (filled background):
+
+```json
+{
+  "indicatorStyle": "pill",
+  "indicatorRadius": 12,
+  "indicatorColor": "#2196F3"
+}
+```
+
+Underline style:
+
+```json
+{
+  "indicatorStyle": "underline",
+  "indicatorWeight": 3,
+  "indicatorColor": "#2196F3"
+}
+```
+
+**Color Customization**
+
+- `backgroundColor` – tab bar background (hex format)
+- `indicatorColor` – active tab indicator color
+- `labelColor` – active tab text color
+- `unselectedLabelColor` – inactive tab text color
+
+**Padding & Spacing**
+
+- `tabBarPadding` / `tabBarMargin` – spacing around the tab bar
+- `labelPadding` – padding around each tab label
+- `contentPadding` – padding inside the content area
+
+Use number for uniform padding or object `{"horizontal": 16, "vertical": 8}` for granular control.
+
+**Common Patterns**
+
+Multi-step form:
+
+```json
+{
+  "type": "tabContainer",
+  "props": {
+    "swipeable": false,
+    "initialIndex": "@state.currentStep",
+    "tabs": [
+      {
+        "label": "Step 1",
+        "content": { "type": "textField", "props": { "name": "firstName" } }
+      },
+      {
+        "label": "Step 2",
+        "content": { "type": "textField", "props": { "name": "email" } }
+      }
+    ]
+  }
+}
+```
+
+Data categories with dynamic badges:
+
+```json
+{
+  "isScrollable": true,
+  "tabs": [
+    {
+      "label": "All",
+      "badge": "@datasource.items.length",
+      "content": {...}
+    },
+    {
+      "label": "Active",
+      "badge": "@datasource.activeItems.length",
+      "content": {...}
+    }
+  ]
+}
+```
+
+**Programmatic Tab Control**
+
+Change tabs via state:
+
+```json
+{
+  "type": "button",
+  "props": {
+    "text": "Go to Settings",
+    "action": {
+      "type": "setState",
+      "key": "activeTab",
+      "value": 2
+    }
+  }
+}
+```
+
+Then bind `initialIndex`:
+
+```json
+{
+  "type": "tabContainer",
+  "props": {
+    "initialIndex": "@state.activeTab",
+    "tabs": [...]
+  }
+}
+```
+
+**Tips**
+
+- Keep tab labels short (1-2 words) for scannability
+- Use icons to help users quickly identify tab purposes
+- Show badges for actionable items (notifications, unread counts)
+- Enable `isScrollable` when you have 5+ tabs
+- Disable `swipeable` for wizards/step-by-step flows where order matters
+- Set appropriate `height` based on tallest content to avoid jarring jumps
+- Tabs can contain any component—use `column` for complex layouts
+
 ## SummaryCard
 
 Surface KPI-style values computed from state or data.
