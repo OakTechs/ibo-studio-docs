@@ -83,6 +83,126 @@ Display content in visually rich card layouts with images, text, and customizabl
 - Use `cardsPerRow: 2` for product grids on mobile; keep spacing 12-16px
 - Perfect for product listings, user profiles, blog posts, team members, and portfolio items
 
+## CustomCard
+
+A highly customizable card component with flexible headers, borders, and styling options. Extends the standard Material Card with advanced configuration for dynamic UI rendering.
+
+```json
+{
+  "type": "CustomCard",
+  "props": {
+    "title": "Sales Summary",
+    "elevation": 6,
+    "color": "#F5F5F5",
+    "borderColor": "#2196F3",
+    "borderWidth": 2,
+    "borderRadius": 16,
+    "titleColor": "#2196F3",
+    "titleSize": 20,
+    "titleWeight": "bold",
+    "padding": 20,
+    "margin": 12,
+    "child": {
+      "type": "Text",
+      "props": {
+        "text": "Total Revenue: $45,000"
+      }
+    }
+  }
+}
+```
+
+**Key Properties**
+
+- `title` – text title displayed at the top (only shown if `header` is null)
+- `header` – custom widget for the card header (takes precedence over `title`)
+- `elevation` – card shadow depth (default: 4.0; range 0-24)
+- `color` – background color in hex format (`#RRGGBB` or `#AARRGGBB`)
+- `shadowColor` – shadow color in hex format
+- `borderColor`, `borderWidth`, `borderRadius` – border styling
+- `titleColor`, `titleSize`, `titleWeight` – title text styling
+- `padding` – internal content padding (number or object: `{ "left": 16, "top": 8, "right": 16, "bottom": 8 }`)
+- `margin` – external card spacing (same format as padding)
+- `child` – main content widget (required)
+
+**Custom Header**
+
+```json
+{
+  "type": "CustomCard",
+  "props": {
+    "elevation": 4,
+    "borderRadius": 12,
+    "padding": 16,
+    "header": {
+      "type": "Row",
+      "props": {
+        "children": [
+          {
+            "type": "Icon",
+            "props": { "icon": "analytics", "color": "#4CAF50" }
+          },
+          {
+            "type": "Text",
+            "props": { "text": "Analytics Dashboard" }
+          }
+        ]
+      }
+    },
+    "child": {
+      "type": "Column",
+      "props": {
+        "children": [
+          {
+            "type": "Text",
+            "props": { "text": "Page Views: 1,234" }
+          },
+          {
+            "type": "Text",
+            "props": { "text": "Active Users: 89" }
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+**Title Styling**
+
+```json
+{
+  "type": "CustomCard",
+  "props": {
+    "title": "Important Notice",
+    "titleColor": "#D32F2F",
+    "titleSize": 18,
+    "titleWeight": "w600",
+    "color": "#FFEBEE",
+    "borderColor": "#D32F2F",
+    "borderWidth": 1.5,
+    "elevation": 3,
+    "child": {
+      "type": "Text",
+      "props": {
+        "text": "Your attention is required"
+      }
+    }
+  }
+}
+```
+
+**Tips**
+
+- Use `title` for simple text headers; use `header` for complex layouts with icons/buttons
+- `header` takes precedence over `title` if both are provided
+- Keep elevation between 0-8 for most use cases; higher = more prominence
+- Ensure sufficient color contrast between background and text for accessibility
+- Use hex color formats: `#RGB`, `#RRGGBB`, or `#AARRGGBB` for transparency
+- Font weights support: `"normal"`, `"bold"`, `"w100"` through `"w900"`
+- Border requires both `borderWidth` > 0 and a valid `borderColor` to be visible
+- Perfect for dashboards, info panels, settings sections, and content containers
+
 ## ExpandableCardList
 
 Display data in expandable cards with search, pagination, and rich metadata. Each card shows summary information when collapsed and reveals all item fields in a key-value table when expanded.
