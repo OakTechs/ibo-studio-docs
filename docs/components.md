@@ -1,10 +1,211 @@
 # Component Catalogue
 
-Mix and match components inside each section’s `components[]` array. Every component defines a `type`, `props`, and optional `data` binding. Below are the most common building blocks.
+Mix and match components inside each section's `components[]` array. Every component defines a `type`, `props`, and optional `data` binding. Below are the most common building blocks.
+
+## CardImage
+
+Display content in visually rich card layouts with images, text, and customizable styling.
+
+```json
+{
+  "type": "CardImage",
+  "props": {
+    "imageUrl": "https://example.com/product.jpg",
+    "title": "Premium Headphones",
+    "body": "High-quality wireless headphones with noise cancellation",
+    "caption": "$299.99",
+    "imagePosition": "top",
+    "alignment": "center",
+    "imageSize": 200,
+    "cardElevation": 6,
+    "borderRadius": 16,
+    "titleStyle": {
+      "fontSize": 20,
+      "fontWeight": "bold",
+      "color": "#1a1a1a"
+    },
+    "bodyStyle": {
+      "fontSize": 14,
+      "color": "#666666"
+    },
+    "captionStyle": {
+      "fontSize": 18,
+      "fontWeight": "bold",
+      "color": "#2196F3"
+    }
+  }
+}
+```
+
+**Key Properties**
+
+- `imageUrl` – URL of the image to display (supports `@state`, `@datasource`, `@item` bindings)
+- `title`, `body`, `caption` – text content with independent styling
+- `imagePosition` – `"top"`, `"bottom"`, `"left"`, or `"right"`
+- `imageFit` – `"cover"` (fills space), `"contain"` (fits fully), or `"fill"` (stretches)
+- `imageSize` – height in pixels for full-width images or width/height for square images
+- `alignment` – `"left"`, `"center"`, or `"right"` for text alignment
+- `padding` – number for uniform padding or object `{ left, right, top, bottom }`
+- `cardColor`, `cardElevation`, `borderRadius` – visual card styling
+
+**Multi-Card Grid**
+
+```json
+{
+  "type": "CardImage",
+  "props": {
+    "cardsPerRow": 2,
+    "spacing": 16,
+    "cards": [
+      {
+        "imageUrl": "https://example.com/product1.jpg",
+        "title": "Product 1",
+        "body": "Description",
+        "caption": "$49.99"
+      },
+      {
+        "imageUrl": "https://example.com/product2.jpg",
+        "title": "Product 2",
+        "body": "Description",
+        "caption": "$59.99"
+      }
+    ]
+  }
+}
+```
+
+**Tips**
+
+- Use `imageFit: "cover"` for consistent card sizes in grids
+- Keep titles concise (1-2 lines) for better scannability
+- Leverage `titleStyle`, `bodyStyle`, `captionStyle` for typography control
+- Position images `"left"` or `"right"` for profile/contact cards
+- Use `cardsPerRow: 2` for product grids on mobile; keep spacing 12-16px
+- Perfect for product listings, user profiles, blog posts, team members, and portfolio items
+
+## CustomCard
+
+A highly customizable card component with flexible headers, borders, and styling options. Extends the standard Material Card with advanced configuration for dynamic UI rendering.
+
+```json
+{
+  "type": "CustomCard",
+  "props": {
+    "title": "Sales Summary",
+    "elevation": 6,
+    "color": "#F5F5F5",
+    "borderColor": "#2196F3",
+    "borderWidth": 2,
+    "borderRadius": 16,
+    "titleColor": "#2196F3",
+    "titleSize": 20,
+    "titleWeight": "bold",
+    "padding": 20,
+    "margin": 12,
+    "child": {
+      "type": "Text",
+      "props": {
+        "text": "Total Revenue: $45,000"
+      }
+    }
+  }
+}
+```
+
+**Key Properties**
+
+- `title` – text title displayed at the top (only shown if `header` is null)
+- `header` – custom widget for the card header (takes precedence over `title`)
+- `elevation` – card shadow depth (default: 4.0; range 0-24)
+- `color` – background color in hex format (`#RRGGBB` or `#AARRGGBB`)
+- `shadowColor` – shadow color in hex format
+- `borderColor`, `borderWidth`, `borderRadius` – border styling
+- `titleColor`, `titleSize`, `titleWeight` – title text styling
+- `padding` – internal content padding (number or object: `{ "left": 16, "top": 8, "right": 16, "bottom": 8 }`)
+- `margin` – external card spacing (same format as padding)
+- `child` – main content widget (required)
+
+**Custom Header**
+
+```json
+{
+  "type": "CustomCard",
+  "props": {
+    "elevation": 4,
+    "borderRadius": 12,
+    "padding": 16,
+    "header": {
+      "type": "Row",
+      "props": {
+        "children": [
+          {
+            "type": "Icon",
+            "props": { "icon": "analytics", "color": "#4CAF50" }
+          },
+          {
+            "type": "Text",
+            "props": { "text": "Analytics Dashboard" }
+          }
+        ]
+      }
+    },
+    "child": {
+      "type": "Column",
+      "props": {
+        "children": [
+          {
+            "type": "Text",
+            "props": { "text": "Page Views: 1,234" }
+          },
+          {
+            "type": "Text",
+            "props": { "text": "Active Users: 89" }
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+**Title Styling**
+
+```json
+{
+  "type": "CustomCard",
+  "props": {
+    "title": "Important Notice",
+    "titleColor": "#D32F2F",
+    "titleSize": 18,
+    "titleWeight": "w600",
+    "color": "#FFEBEE",
+    "borderColor": "#D32F2F",
+    "borderWidth": 1.5,
+    "elevation": 3,
+    "child": {
+      "type": "Text",
+      "props": {
+        "text": "Your attention is required"
+      }
+    }
+  }
+}
+```
+
+**Tips**
+
+- Use `title` for simple text headers; use `header` for complex layouts with icons/buttons
+- `header` takes precedence over `title` if both are provided
+- Keep elevation between 0-8 for most use cases; higher = more prominence
+- Ensure sufficient color contrast between background and text for accessibility
+- Use hex color formats: `#RGB`, `#RRGGBB`, or `#AARRGGBB` for transparency
+- Font weights support: `"normal"`, `"bold"`, `"w100"` through `"w900"`
+- Border requires both `borderWidth` > 0 and a valid `borderColor` to be visible
+- Perfect for dashboards, info panels, settings sections, and content containers
 
 ## ExpandableCardList
 
-Ideal for transactional feeds with quick-glance metadata.
+Display data in expandable cards with search, pagination, and rich metadata. Each card shows summary information when collapsed and reveals all item fields in a key-value table when expanded.
 
 ```json
 {
@@ -26,12 +227,98 @@ Ideal for transactional feeds with quick-glance metadata.
 }
 ```
 
+**Key Properties**
+
+- `itemTitle` – field name for card's main title (default: `"title"`)
+- `itemSubtitle` – field name for card's subtitle (default: `"subtitle"`)
+- `leadingKey` – field for leading avatar/indicator (circular badge on left)
+- `trailingKey` – field for trailing badge/chip (colored chip on right)
+- `headerChips` – array of field names to display as chips below subtitle
+- `chipLabels` – custom labels for chip fields (maps field names to display text)
+
+**Search Integration**
+
+```json
+{
+  "type": "ExpandableCardList",
+  "props": {
+    "itemTitle": "name",
+    "itemSubtitle": "breed",
+    "searchStateKey": "horseSearch",
+    "searchFields": ["owner", "trainer", "notes"],
+    "minSearchLength": 2,
+    "emptySearchMessage": "No horses match your search"
+  },
+  "data": { "source": "horses" }
+}
+```
+
+- `searchStateKey` – state key containing search query (pair with `SearchBar` using same key)
+- `searchFields` – additional fields to search (auto-searches title, subtitle, leading, trailing, chips)
+- `minSearchLength` – minimum characters before filtering activates (default: 3)
+- `scrollToTopOnSearch` – auto-scroll to top when search changes (default: true)
+
+**Pagination**
+
+```json
+{
+  "type": "ExpandableCardList",
+  "props": {
+    "manualPagination": true,
+    "pageSize": 25,
+    "autoLoadMoreOnScroll": true,
+    "manualKey": "orders_pagination"
+  },
+  "data": { "source": "orders" }
+}
+```
+
+- `manualPagination` – enable client-side pagination (default: true)
+- `pageSize` – items per page (default: 50)
+- `autoLoadMoreOnScroll` – load more when scrolling near bottom (default: true)
+- `manualKey` – unique ID for pagination state (auto-generated if omitted)
+
+**Action Buttons**
+
+```json
+{
+  "type": "ExpandableCardList",
+  "props": {
+    "itemTitle": "name",
+    "actionButton": {
+      "text": "View Details",
+      "icon": "arrow_forward",
+      "visibleKey": "canEdit",
+      "action": {
+        "type": "openSchema",
+        "url": "/horse-details",
+        "initialState": { "horseId": "@item.id" }
+      }
+    }
+  },
+  "data": { "source": "horses" }
+}
+```
+
+- `actionButton.text` – static button label (or use `labelKey` for dynamic label from item field)
+- `actionButton.icon` – Material icon name (`send`, `edit`, `save`, etc.)
+- `actionButton.visible` – static visibility (or use `visibleKey` for dynamic from item field)
+- `actionButton.action` – action to execute when clicked
+
+**Styling**
+
+- `horizontalMargin` – horizontal margin for each card (default: 8)
+- `verticalMargin` – vertical margin between cards (default: 4)
+
 **Tips**
 
-- Reserve chips for high-signal fields; too many chips reduce scannability.
-- Use `chipLabels` to translate backend keys into human-friendly text.
-- Pair with `searchStateKey`, `searchFields[]`, and `minSearchLength` when you want in-memory filtering, or leave them out for simple scroll-only feeds.
-- Enable `manualPagination` + `pageSize` if you need the component to request more rows from the server (works well with the `pagination` block in your data source).
+- Reserve chips for high-signal fields; too many chips reduce scannability
+- Use `chipLabels` to translate backend keys into human-friendly text
+- Pair with `SearchBar` component using matching `searchStateKey` for filtering
+- Set unique `manualKey` when using multiple lists with the same data source
+- All item fields display in alphabetical key-value table when card expands
+- Use `visibleKey` on action buttons to show contextual actions per item
+- Keep `pageSize` between 15-50 for optimal performance on mobile
 
 ## SearchBar
 
@@ -59,6 +346,202 @@ Surface lightweight filtering in the same section as your list.
 
 > Keep helper text short and let the empty state on your list explain what to try next.
 
+## TabContainer
+
+Organize content into switchable tabs with support for icons, badges, and swipe gestures.
+
+```json
+{
+  "type": "tabContainer",
+  "props": {
+    "initialIndex": 0,
+    "height": 400,
+    "indicatorStyle": "pill",
+    "tabs": [
+      {
+        "label": "Overview",
+        "icon": "home",
+        "content": {
+          "type": "text",
+          "props": {
+            "text": "Welcome to the overview section!"
+          }
+        }
+      },
+      {
+        "label": "Messages",
+        "icon": "mail",
+        "badge": "5",
+        "badgeColor": "#FF5252",
+        "badgeTextColor": "#FFFFFF",
+        "content": {
+          "type": "text",
+          "props": {
+            "text": "You have 5 new messages"
+          }
+        }
+      },
+      {
+        "label": "Settings",
+        "icon": "settings",
+        "content": {
+          "type": "column",
+          "props": {
+            "children": [
+              {
+                "type": "text",
+                "props": {
+                  "text": "Settings content here"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+**Key Properties**
+
+- `tabs` – array of tab objects; each requires `label` and `content`
+- `initialIndex` – which tab to show initially (0-based; default: 0); bind to `@state` for programmatic control
+- `height` – content area height in pixels (default: 360)
+- `isScrollable` – enable horizontal scrolling for many tabs (default: false)
+- `swipeable` – allow swipe gestures to change tabs (default: true); disable for step-by-step flows
+
+**Tab Object**
+
+Each tab supports:
+
+- `label` – text shown on the tab button (required)
+- `content` – widget/component to display when active (required)
+- `icon` – Material icon name (`mail`, `notifications`, `person`, etc.)
+- `badge` – small text badge (e.g., notification count) shown on tab
+- `badgeColor` / `badgeTextColor` – badge styling (hex format)
+
+**Indicator Styles**
+
+Pill style (filled background):
+
+```json
+{
+  "indicatorStyle": "pill",
+  "indicatorRadius": 12,
+  "indicatorColor": "#2196F3"
+}
+```
+
+Underline style:
+
+```json
+{
+  "indicatorStyle": "underline",
+  "indicatorWeight": 3,
+  "indicatorColor": "#2196F3"
+}
+```
+
+**Color Customization**
+
+- `backgroundColor` – tab bar background (hex format)
+- `indicatorColor` – active tab indicator color
+- `labelColor` – active tab text color
+- `unselectedLabelColor` – inactive tab text color
+
+**Padding & Spacing**
+
+- `tabBarPadding` / `tabBarMargin` – spacing around the tab bar
+- `labelPadding` – padding around each tab label
+- `contentPadding` – padding inside the content area
+
+Use number for uniform padding or object `{"horizontal": 16, "vertical": 8}` for granular control.
+
+**Common Patterns**
+
+Multi-step form:
+
+```json
+{
+  "type": "tabContainer",
+  "props": {
+    "swipeable": false,
+    "initialIndex": "@state.currentStep",
+    "tabs": [
+      {
+        "label": "Step 1",
+        "content": { "type": "textField", "props": { "name": "firstName" } }
+      },
+      {
+        "label": "Step 2",
+        "content": { "type": "textField", "props": { "name": "email" } }
+      }
+    ]
+  }
+}
+```
+
+Data categories with dynamic badges:
+
+```json
+{
+  "isScrollable": true,
+  "tabs": [
+    {
+      "label": "All",
+      "badge": "@datasource.items.length",
+      "content": {...}
+    },
+    {
+      "label": "Active",
+      "badge": "@datasource.activeItems.length",
+      "content": {...}
+    }
+  ]
+}
+```
+
+**Programmatic Tab Control**
+
+Change tabs via state:
+
+```json
+{
+  "type": "button",
+  "props": {
+    "text": "Go to Settings",
+    "action": {
+      "type": "setState",
+      "key": "activeTab",
+      "value": 2
+    }
+  }
+}
+```
+
+Then bind `initialIndex`:
+
+```json
+{
+  "type": "tabContainer",
+  "props": {
+    "initialIndex": "@state.activeTab",
+    "tabs": [...]
+  }
+}
+```
+
+**Tips**
+
+- Keep tab labels short (1-2 words) for scannability
+- Use icons to help users quickly identify tab purposes
+- Show badges for actionable items (notifications, unread counts)
+- Enable `isScrollable` when you have 5+ tabs
+- Disable `swipeable` for wizards/step-by-step flows where order matters
+- Set appropriate `height` based on tallest content to avoid jarring jumps
+- Tabs can contain any component—use `column` for complex layouts
+
 ## SummaryCard
 
 Surface KPI-style values computed from state or data.
@@ -80,6 +563,202 @@ Place summary cards before forms so users see totals update live.
 ## Text + Divider
 
 `Text` uses style tokens (`title`, `subtitle`, `body`, `caption`) to keep typography consistent. Pair with `Divider` to separate logical groups without overwhelming the layout.
+
+## TextField
+
+The workhorse text input component that supports various keyboard types, validation, and onChange actions.
+
+```json
+{
+  "type": "TextField",
+  "props": {
+    "name": "quantity",
+    "label": "Quantity",
+    "required": true,
+    "keyboard": "number",
+    "hint": "Enter quantity",
+    "helper": "Minimum order: 1 unit",
+    "prefixIcon": "shopping_cart",
+    "filled": true,
+    "onChange": [
+      {
+        "type": "calc",
+        "target": "amount",
+        "formula": "rate*quantity",
+        "fixed": 2
+      }
+    ]
+  }
+}
+```
+
+**Key Properties**
+
+- `name` – unique state key for the field value
+- `label` – display label above the field
+- `keyboard` – `"text"` (default), `"number"`, `"email"`, `"phone"`, `"url"` for optimized mobile keyboards
+- `hint` – placeholder text shown when empty
+- `helper` – helper text displayed below the field
+- `prefixIcon` / `suffixIcon` – Material icons for visual context
+- `required` – adds asterisk (\*) to label
+- `readOnly` – makes field read-only
+- `filled` – enables gray background fill (default: true)
+- `onChange` – array of actions triggered when value changes
+
+**Common Patterns**
+
+Email input:
+
+```json
+{
+  "name": "email",
+  "label": "Email Address",
+  "required": true,
+  "keyboard": "email",
+  "hint": "you@example.com",
+  "prefixIcon": "email",
+  "helper": "We'll never share your email"
+}
+```
+
+Numeric calculation:
+
+```json
+{
+  "name": "discount",
+  "label": "Discount %",
+  "keyboard": "number",
+  "onChange": [
+    {
+      "type": "calc",
+      "target": "netAmount",
+      "formula": "amount - (amount*discount/100)",
+      "fixed": 2
+    }
+  ]
+}
+```
+
+**Tips**
+
+- Always set appropriate `keyboard` type for better mobile UX
+- Use `helper` text for format hints or constraints
+- Keep `hint` text concise (under 30 characters)
+- Mark computed/calculated fields as `readOnly: true`
+- Leverage `onChange` for real-time calculations and validations
+
+## RichTextEditor
+
+The `RichTextEditor` component provides a flexible input field for creating formatted text using a markdown-like syntax. It includes a toolbar for common formatting options (bold, italic, underline) and outputs a string.
+
+```json
+{
+  "type": "RichTextEditor",
+  "props": {
+    "name": "content",
+    "label": "Description",
+    "initialValue": "This is some **bold** and *italic* text."
+  }
+}
+```
+
+**Key Properties**
+
+- `name` – (Required) A unique identifier for the state key where the rich text content will be stored.
+- `label` – (Optional) The display label shown above the editor.
+- `initialValue` – (Optional) The initial text content to populate the editor.
+
+**Supported Formatting**
+
+The editor supports the following markdown-like syntax:
+
+- **Bold:** Wrap text with double asterisks (e.g., `**bold text**`)
+- _Italic:_ Wrap text with single asterisks (e.g., `*italic text*`)
+- <u>Underline:</u> Wrap text with double underscores (e.g., `__underlined text__`)
+
+**Example Usage**
+
+```json
+{
+  "type": "RichTextEditor",
+  "props": {
+    "name": "productDescription",
+    "label": "Product Description",
+    "initialValue": "This product is **innovative** and *highly recommended* for its __durability__."
+  }
+}
+```
+
+**Tips**
+
+- The output of the `RichTextEditor` is a string with markdown-like syntax; ensure your display mechanism that can parse and render this format.
+- Use the `label` prop to provide clear instructions to the user.
+- The `name` prop is crucial for binding the editor's content to the application's state.
+
+## ChipSelect
+
+A flexible component that allows users to make single or multiple selections from a set of chips. It is ideal for filtering, tagging, or selecting options in a visually engaging way.
+
+```json
+{
+  "type": "chipselect",
+  "props": {
+    "name": "selectedFruits",
+    "label": "Select your favorite fruits",
+    "options": [
+      {"label": "Apple", "value": "apple"},
+      {"label": "Banana", "value": "banana"},
+      {"label": "Orange", "value": "orange"}
+    ],
+    "initialValue": ["apple"],
+    "maxSelection": 2,
+    "selectedColor": "#FF5733"
+  }
+}
+```
+
+**Key Properties**
+
+*   `name` - (Required) The state key to store the list of selected values.
+*   `label` - (Optional) A text label displayed above the chips.
+*   `options` - (Required) A list of objects, each with a `label` (display text) and a `value` (stored value).
+*   `initialValue` - (Optional) A list of values to be pre-selected.
+*   `maxSelection` - (Optional) The maximum number of chips that can be selected. If set to `1`, it behaves like a radio button group. If omitted, multiple selections are allowed.
+*   `selectedColor` - (Optional) The background color of the selected chips (hex string).
+*   `wrap` - (Optional) A boolean that determines if the chips should wrap to the next line. Defaults to `true`. If `false`, the chips are laid out in a single horizontally scrollable row.
+
+## FloatingActionButton
+
+A circular or extended button for a primary action in the application.
+
+```json
+{
+  "type": "FloatingActionButton",
+  "props": {
+    "onPressed": { "type": "openSchema", "schema": "/full-path" },
+    "icon": "add",
+    "label": "Add Order",
+    "backgroundColor": "#FFC107",
+    "foregroundColor": "#000000",
+    "elevation": 8.0
+  }
+}
+```
+
+**Key Properties**
+
+- `onPressed` – action to perform when the button is pressed. Can be a navigation, submit, or other action.
+- `icon` – the name of the Material icon to display.
+- `label` – optional text to display, creating an extended FAB.
+- `backgroundColor` – the background color of the button.
+- `foregroundColor` – the color of the icon and label.
+- `elevation` – the z-coordinate at which to place this button.
+
+**Tips**
+
+- Use a FAB for the most common or primary action on a screen.
+- An extended FAB with a `label` can provide more context than an icon alone.
+- Limit each screen to a single FAB to avoid visual clutter.
 
 ## FormGrid
 
@@ -614,11 +1293,3 @@ Actions support composable side effects:
 - `snack` – toast/snackbar notifications.
 - `setState` – reset form fields or prime defaults.
 - `navigate` – move to another section or screen.
-
-## Extending the Library
-
-When introducing new component types:
-
-- Document required props so linting rules stay reliable.
-- Provide sensible defaults (labels, icon sets) to reduce JSON verbosity.
-- Keep visual style tokens centralized to maintain brand consistency.
