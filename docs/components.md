@@ -320,6 +320,129 @@ Display data in expandable cards with search, pagination, and rich metadata. Eac
 - Use `visibleKey` on action buttons to show contextual actions per item
 - Keep `pageSize` between 15-50 for optimal performance on mobile
 
+## List
+
+Display a simple vertical list of items with title, subtitle, and caption fields. Ideal for lightweight data presentation without the complexity of expandable cards.
+
+```json
+{
+  "type": "list",
+  "props": {
+    "itemTitle": "text",
+    "itemSubtitle": "description",
+    "itemCaption": "caption",
+    "top": 20,
+    "left": 20,
+    "hidden": false,
+    "width": "Fill"
+  },
+  "data": {
+    "items": [
+      {
+        "text": "Title 01",
+        "description": "Description 01",
+        "caption": "Caption 01"
+      },
+      {
+        "text": "Title 02",
+        "description": "Description 02",
+        "caption": "Caption 02"
+      }
+    ]
+  }
+}
+```
+
+**Key Properties**
+
+- `itemTitle` – field name for the main title of each list item (default: `"text"`)
+- `itemSubtitle` – field name for the subtitle/description (default: `"description"`)
+- `itemCaption` – field name for the caption/additional text (default: `"caption"`)
+- `width` – width behavior: `"Fill"` (full width) or `"Wrap"` (fit content)
+- `hidden` – visibility control: `true` or `false` (can be bound to state)
+- `top` / `left` – positioning coordinates (in pixels)
+
+**Dynamic Data Binding**
+
+With data source:
+
+```json
+{
+  "type": "list",
+  "props": {
+    "itemTitle": "name",
+    "itemSubtitle": "email",
+    "itemCaption": "role",
+    "width": "Fill"
+  },
+  "data": {
+    "source": "users"
+  }
+}
+```
+
+With state binding:
+
+```json
+{
+  "type": "list",
+  "props": {
+    "itemTitle": "product_name",
+    "itemSubtitle": "category",
+    "itemCaption": "price",
+    "width": "Fill"
+  },
+  "data": {
+    "items": "@state.productList"
+  }
+}
+```
+
+**Common Patterns**
+
+Contact list:
+
+```json
+{
+  "type": "list",
+  "props": {
+    "itemTitle": "name",
+    "itemSubtitle": "phone",
+    "itemCaption": "email",
+    "width": "Fill"
+  },
+  "data": {
+    "source": "contacts"
+  }
+}
+```
+
+Task list:
+
+```json
+{
+  "type": "list",
+  "props": {
+    "itemTitle": "task_name",
+    "itemSubtitle": "assigned_to",
+    "itemCaption": "due_date",
+    "width": "Fill"
+  },
+  "data": {
+    "source": "tasks"
+  }
+}
+```
+
+**Tips**
+
+- Use for simple, read-only lists without interaction requirements
+- For expandable details, use `ExpandableCardList` instead
+- Keep list items concise; all three text fields (title, subtitle, caption) are displayed
+- Bind to data sources or state for dynamic content
+- Use `hidden` property with state bindings for conditional display
+- Perfect for simple contact lists, menu items, notifications, or activity feeds
+
 ## SearchBar
 
 Surface lightweight filtering in the same section as your list.
