@@ -1016,59 +1016,66 @@ Future bookings:
 
 ## CheckBox
 
-Boolean selection with a checkmark for agreements, toggles, and multi-select options.
+Multi-select checkbox group for choosing one or more options from a visible list.
 
 ```json
 {
-  "type": "CheckBox",
+  "type": "Checkbox",
   "props": {
-    "name": "acceptTerms",
-    "label": "I accept the terms and conditions",
-    "required": true
+    "name": "payment_options",
+    "label": "Payment Options",
+    "required": false,
+    "initialValue": ["include_tips"],
+    "options": [
+      { "label": "Include Tips in Net", "value": "include_tips" },
+      { "label": "Notify Customer", "value": "notify_customer" },
+      { "label": "Mark as Credit Sale", "value": "mark_credit" }
+    ]
   }
 }
 ```
 
 **Key Properties**
 
-- `name` – state key for the boolean value (`true`/`false`)
-- `label` – text displayed next to the checkbox
+- `name` – state key storing an array of selected values
+- `label` – text label displayed above the checkbox group
+- `options` – array of `{ "label": "...", "value": "..." }` objects
+- `initialValue` – array of pre-selected values (e.g., `["option1", "option2"]`)
 - `required` – adds asterisk (\*) to label for mandatory fields
-- `initialValue` – pre-check the box; supports boolean or `@state`/`@datasource` references
-- `onChange` – trigger actions when checked/unchecked
+- `onChange` – trigger actions when selections change
 
 **Common Patterns**
 
-Terms acceptance:
+User preferences:
 
 ```json
 {
-  "name": "consent",
-  "label": "I consent to data processing",
-  "required": true
+  "type": "Checkbox",
+  "props": {
+    "name": "notifications",
+    "label": "Notification Preferences",
+    "initialValue": ["email"],
+    "options": [
+      { "label": "Email Notifications", "value": "email" },
+      { "label": "SMS Alerts", "value": "sms" },
+      { "label": "Push Notifications", "value": "push" }
+    ]
+  }
 }
 ```
 
-Multi-select preferences:
+Feature toggles:
 
 ```json
 {
-  "type": "FormGrid",
+  "type": "Checkbox",
   "props": {
-    "columns": 1,
-    "fields": [
-      {
-        "type": "CheckBox",
-        "props": { "name": "newsletter", "label": "Subscribe to newsletter" }
-      },
-      {
-        "type": "CheckBox",
-        "props": { "name": "updates", "label": "Receive product updates" }
-      },
-      {
-        "type": "CheckBox",
-        "props": { "name": "promotions", "label": "Receive promotional offers" }
-      }
+    "name": "features",
+    "label": "Enable Features",
+    "options": [
+      { "label": "Auto-save", "value": "autosave" },
+      { "label": "Dark Mode", "value": "dark_mode" },
+      { "label": "Analytics", "value": "analytics" }
     ]
   }
 }
@@ -1076,9 +1083,11 @@ Multi-select preferences:
 
 **Tips**
 
-- Use for agreements, consents, and independent boolean choices
-- Store values as `@state.<name>` for form submission
-- Prefer `Switch` for settings with immediate effect; use `CheckBox` for form submissions
+- Selected values are stored as an array in `@state.<name>`
+- Use when users can select multiple independent options
+- For single selection, use `RadioGroup` instead
+- Keep option count under 7 for better scannability
+- Prefer `Switch` for settings with immediate effect; use `Checkbox` for form submissions
 
 ## RadioGroup
 
