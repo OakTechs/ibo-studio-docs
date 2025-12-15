@@ -560,9 +560,119 @@ Surface KPI-style values computed from state or data.
 
 Place summary cards before forms so users see totals update live.
 
-## Text + Divider
+## Text
 
-`Text` uses style tokens (`title`, `subtitle`, `body`, `caption`) to keep typography consistent. Pair with `Divider` to separate logical groups without overwhelming the layout.
+Display formatted text content with flexible alignment, styling, and Markdown support.
+
+```json
+{
+  "type": "Text",
+  "props": {
+    "text": "👋 Hello",
+    "mode": "Markdown",
+    "width": "Fill",
+    "align": "center",
+    "hidden": "false",
+    "top": 20,
+    "left": 20
+  }
+}
+```
+
+**Key Properties**
+
+- `text` – the text content to display (supports emojis, special characters, and dynamic bindings like `@state` or `@datasource`)
+- `mode` – rendering mode: `"Markdown"` for rich text formatting, or `"plain"` text (default)
+- `width` – width behavior: `"Fill"` or `"Fixed"`
+- `align` – text alignment: `"left"`, `"center"`, or `"right"`
+- `hidden` – visibility control: `"true"` or `"false"` (can be bound to state for conditional display)
+- `top` / `left` – positioning coordinates (in pixels)
+
+**Common Patterns**
+
+Dynamic text with state binding:
+
+```json
+{
+  "type": "Text",
+  "props": {
+    "text": "Welcome, @state.username!",
+    "mode": "Markdown",
+    "align": "left"
+  }
+}
+```
+
+Conditional visibility:
+
+```json
+{
+  "type": "Text",
+  "props": {
+    "text": "Error: Please fix the form",
+    "align": "center",
+    "hidden": "@state.isValid"
+  }
+}
+```
+
+**Tips**
+
+- Use `mode: "Markdown"` to enable rich text formatting (bold, italic, links, etc.)
+- Set `width: "Fill"` for full-width text blocks; use `"Wrap"` for inline text
+- Leverage `hidden` property with state bindings for conditional rendering
+- Combine with `Divider` to separate logical sections
+
+## Divider
+
+Horizontal line separator for visually dividing content sections.
+
+```json
+{
+  "type": "Divider"
+}
+```
+
+**Usage**
+
+The Divider component creates a subtle horizontal line to separate logical groups of content without overwhelming the layout. It requires no additional properties and automatically spans the container width.
+
+**Common Patterns**
+
+Between form sections:
+
+```json
+{
+  "components": [
+    {
+      "type": "Text",
+      "props": { "text": "Personal Information" }
+    },
+    {
+      "type": "TextField",
+      "props": { "name": "firstName", "label": "First Name" }
+    },
+    {
+      "type": "Divider"
+    },
+    {
+      "type": "Text",
+      "props": { "text": "Contact Details" }
+    },
+    {
+      "type": "TextField",
+      "props": { "name": "email", "label": "Email" }
+    }
+  ]
+}
+```
+
+**Tips**
+
+- Use sparingly to avoid visual clutter
+- Best for separating major content sections or groupings
+- Pairs well with section headings using `Text` component
+- Automatically inherits theme colors for consistency
 
 ## TextField
 
