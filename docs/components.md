@@ -1182,7 +1182,7 @@ Auto-populate related fields:
 
 ## DateField
 
-Native date picker with extensive customization options for forms and data entry.
+Native date and datetime picker with extensive customization options for forms and data entry. Supports date-only and date+time selection modes.
 
 ```json
 {
@@ -1190,29 +1190,113 @@ Native date picker with extensive customization options for forms and data entry
   "props": {
     "name": "sale_date",
     "label": "Sale Date",
+    "mode": "date",
     "required": true,
-    "displayFormat": "long",
+    "displayFormat": "us",
+    "minDate": "today",
     "filled": true,
-    "prefixIcon": "event",
-    "suffixIcon": "calendar_today",
-    "hint": "Select sale date",
-    "minDate": "2024-01-01",
-    "maxDate": "today",
+    "fillColor": "#F5F5F5",
     "borderRadius": 12,
-    "primaryColor": "#6750A4"
+    "prefixIcon": "event",
+    "iconColor": "#6750A4",
+    "primaryColor": "#6750A4",
+    "helperText": "Select the sale date"
   }
 }
 ```
 
 **Key Properties**
 
-- `displayFormat` – controls visual presentation: `"default"` (ISO), `"us"` (MM/dd/yyyy), `"eu"` (dd/MM/yyyy), `"long"` (November 26, 2024), `"short"` (Nov 26, 2024), or `"custom"` with `customFormat` pattern
-- `minDate` / `maxDate` – constrain selectable range; use `"today"` or ISO strings like `"2024-01-01"`
+- `mode` – picker type: `"date"` (default, date only) or `"datetime"` (date + time selection)
+- `displayFormat` – visual presentation: `"default"` (yyyy-MM-dd), `"us"` (MM/dd/yyyy), `"eu"` (dd/MM/yyyy), `"long"` (December 15, 2025), `"short"` (Dec 15, 2025), or `"custom"` with `customFormat` pattern
+- `customFormat` – custom format string when `displayFormat: "custom"` (e.g., `"dd-MMM-yyyy"`, `"MMMM d, yyyy 'at' h:mm a"`)
+- `minDate` / `maxDate` – constrain selectable range; use `"today"` or ISO strings like `"2025-01-01"`
+- `initialDate` – which date calendar opens to; use `"today"` or ISO string (defaults to current date)
 - `yearRange` – years before/after current (default: 10); set to 100 for birth dates
 - `filled` – enable background fill for modern appearance
-- `borderRadius` – corner roundness (8-16 typical); pair with `borderColor` and `focusedBorderColor`
+- `fillColor` – background color for filled style (hex format)
+- `borderStyle` – border type: `"outline"`, `"underline"`, or `"none"`
+- `borderColor` / `focusedBorderColor` – border colors for default and focused states
+- `borderRadius` – corner roundness (8-16 typical)
+- `prefixIcon` / `suffixIcon` – Material icons (`event`, `calendar_today`, `date_range`, `schedule`, `access_time`)
+- `iconColor` – icon tint color (hex format)
 - `primaryColor` – theme color for calendar UI and selection highlights
-- `prefixIcon` / `suffixIcon` – Material icons (`event`, `calendar_today`, `date_range`)
+- `headerBackgroundColor` / `headerTextColor` – calendar header styling
+- `calendarHelpText` – help text shown in calendar dialog (default: "Select date")
+- `cancelText` / `confirmText` – button labels in calendar dialog
+- `onChange` – actions triggered when value changes
+
+**Mode: Date vs DateTime**
+
+Date mode (`mode: "date"`):
+
+```json
+{
+  "type": "DateField",
+  "props": {
+    "name": "order_date",
+    "label": "Order Date",
+    "mode": "date",
+    "displayFormat": "us"
+  }
+}
+```
+
+- Shows only date picker
+- Stored value: `"2025-12-15"` (ISO date string)
+- Display: `12/15/2025`
+
+DateTime mode (`mode: "datetime"`):
+
+```json
+{
+  "type": "DateField",
+  "props": {
+    "name": "appointment_time",
+    "label": "Appointment",
+    "mode": "datetime",
+    "displayFormat": "long"
+  }
+}
+```
+
+- Shows date picker followed by time picker
+- Stored value: `"2025-12-15T14:30:00.000Z"` (ISO datetime string)
+- Display: `December 15, 2025 14:30`
+
+**Display Format Options**
+
+Quick reference with examples for date `2025-12-15` and time `14:30`:
+
+- `"default"` → `2025-12-15` or `2025-12-15 14:30`
+- `"us"` → `12/15/2025` or `12/15/2025 14:30`
+- `"eu"` → `15/12/2025` or `15/12/2025 14:30`
+- `"long"` → `December 15, 2025` or `December 15, 2025 14:30`
+- `"short"` → `Dec 15, 2025` or `Dec 15, 2025 14:30`
+- `"custom"` → your pattern (e.g., `"dd-MMM-yyyy"` → `15-Dec-2025`)
+
+**Custom Format Tokens**
+
+Date tokens: `yyyy` (year), `MMM` (short month), `MMMM` (full month), `MM` (month number), `dd` (day), `d` (day no zero)
+
+Time tokens: `HH` (24h), `hh` (12h), `mm` (minute), `ss` (second), `a` (AM/PM)
+
+Examples:
+
+```json
+{
+  "displayFormat": "custom",
+  "customFormat": "dd/MM/yyyy"
+}
+// Output: 15/12/2025
+
+{
+  "displayFormat": "custom",
+  "customFormat": "MMMM d, yyyy 'at' h:mm a",
+  "mode": "datetime"
+}
+// Output: December 15, 2025 at 2:30 PM
+```
 
 **Common Patterns**
 
@@ -1222,30 +1306,141 @@ Birth date (past only):
 {
   "name": "birth_date",
   "label": "Date of Birth",
+  "required": true,
   "maxDate": "today",
   "yearRange": 100,
-  "displayFormat": "long"
+  "displayFormat": "long",
+  "prefixIcon": "cake",
+  "helperText": "Must be 18 or older"
 }
 ```
 
-Future bookings:
+Future appointments with time:
 
 ```json
 {
-  "name": "appointment_date",
-  "label": "Appointment Date",
+  "name": "meeting_time",
+  "label": "Meeting Time",
+  "mode": "datetime",
+  "required": true,
   "minDate": "today",
-  "yearRange": 1,
-  "helperText": "Available dates: Mon-Fri"
+  "displayFormat": "custom",
+  "customFormat": "MMM d, yyyy 'at' h:mm a",
+  "prefixIcon": "schedule",
+  "helperText": "Schedule your meeting"
+}
+```
+
+Date range (start and end):
+
+```json
+{
+  "type": "FormGrid",
+  "props": {
+    "columns": 2,
+    "fields": [
+      {
+        "name": "start_date",
+        "label": "Start Date",
+        "required": true,
+        "minDate": "today",
+        "onChange": [
+          {
+            "type": "setState",
+            "key": "end_date",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "name": "end_date",
+        "label": "End Date",
+        "required": true,
+        "minDate": "@state.start_date",
+        "hint": "Must be after start date"
+      }
+    ]
+  }
+}
+```
+
+**Styling Examples**
+
+Filled style with no border:
+
+```json
+{
+  "filled": true,
+  "fillColor": "#F5F5F5",
+  "borderStyle": "none",
+  "borderRadius": 12
+}
+```
+
+Outline style with custom colors:
+
+```json
+{
+  "borderStyle": "outline",
+  "borderColor": "#2196F3",
+  "focusedBorderColor": "#1976D2",
+  "borderRadius": 12,
+  "labelColor": "#1976D2"
+}
+```
+
+Underline style:
+
+```json
+{
+  "borderStyle": "underline",
+  "borderColor": "#2196F3",
+  "focusedBorderColor": "#1976D2"
+}
+```
+
+**Advanced Patterns**
+
+Dynamic constraints from state:
+
+```json
+{
+  "name": "check_out",
+  "label": "Check-out Date",
+  "minDate": "@state.check_in",
+  "helperText": "Must be after check-in"
+}
+```
+
+Fetch data on date change:
+
+```json
+{
+  "name": "booking_date",
+  "label": "Booking Date",
+  "onChange": [
+    {
+      "type": "fetchData",
+      "source": "availableSlots",
+      "url": "/api/slots?date=@state.booking_date"
+    }
+  ]
 }
 ```
 
 **Tips**
 
-- Date values always stored as ISO strings (yyyy-MM-dd) regardless of display format
-- Use `helperText` to communicate date constraints clearly
-- Match `primaryColor` and `iconColor` to your theme for visual consistency
+- Date values stored as ISO strings (`yyyy-MM-dd` for date, ISO 8601 for datetime) regardless of display format
+- Use `mode: "datetime"` when you need both date and time selection
+- Set appropriate `displayFormat` to match user locale/preference
+- Use `"today"` for dynamic constraints instead of hardcoded dates
+- Keep `yearRange` at 10 for recent dates; increase to 100+ for birth dates
+- Use `helperText` to communicate date constraints and format expectations
+- Match `primaryColor`, `iconColor`, and border colors to your theme
 - Combine `filled: true` with light `fillColor` for Material Design 3 aesthetic
+- Use `initialDate` to guide users to relevant date ranges
+- Leverage `onChange` for cascading updates, validation, or fetching dependent data
+- Common icons: `event`, `calendar_today`, `calendar_month`, `schedule`, `date_range`, `access_time`
 
 ## CheckBox
 
