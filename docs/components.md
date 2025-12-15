@@ -1269,6 +1269,7 @@ With API sync:
   "props": {
     "text": "Submit",
     "icon": "send",
+    "type": "Primary",
     "action": {
       "type": "submit",
       "url": "https://api.example.com/orders",
@@ -1299,6 +1300,7 @@ With API sync:
 
 Actions support composable side effects:
 
+- `type` – button style: `"Primary"` OR `"Secondary"`
 - `snack` – toast/snackbar notifications.
 - `setState` – reset form fields or prime defaults.
 - `navigate` – move to another section or screen.
