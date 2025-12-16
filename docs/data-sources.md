@@ -17,12 +17,12 @@
 
 ```json
 {
-  "dataSources": [
+  "dataSources": {
     "myData": {
       "url": "https://api.example.com/data",
       "method": "GET"
     }
-  ]
+  }
 }
 ```
 
@@ -30,7 +30,7 @@
 
 ```json
 {
-  "dataSources": [
+  "dataSources": {
     "dataSourceId": {
       "url": "https://api.example.com/endpoint",
       "method": "GET",
@@ -51,7 +51,7 @@
         "pageSize": 20
       }
     }
-  ]
+  }
 }
 ```
 
@@ -402,7 +402,7 @@ Combine with UI for infinite scrolling:
 
 ```json
 {
-  "dataSources": [
+  "dataSources": {
     "feed": {
       "url": "https://api.example.com/feed",
       "method": "GET",
@@ -413,7 +413,7 @@ Combine with UI for infinite scrolling:
         "pageSize": 10
       }
     }
-  ],
+  },
   "sections": [
     {
       "components": [
@@ -441,7 +441,7 @@ Combine with UI for infinite scrolling:
 
 ```json
 {
-  "dataSources": [
+  "dataSources": {
     "headlines": {
       "url": "https://api.news.com/v1/headlines",
       "method": "GET",
@@ -453,7 +453,7 @@ Combine with UI for infinite scrolling:
         }
       }
     }
-  ],
+  },
   "sections": [
     {
       "components": [
@@ -479,7 +479,7 @@ Combine with UI for infinite scrolling:
 
 ```json
 {
-  "dataSources": [
+  "dataSources": {
     "userProfile": {
       "url": "https://api.example.com/profile",
       "method": "GET",
@@ -507,7 +507,7 @@ Combine with UI for infinite scrolling:
         "pageSize": 25
       }
     }
-  ],
+  },
   "sections": [
     {
       "components": [
@@ -538,7 +538,7 @@ Combine with UI for infinite scrolling:
 
 ```json
 {
-  "dataSources": [
+  "dataSources": {
     "products": {
       "url": "https://api.orders.com/products",
       "method": "GET",
@@ -550,7 +550,7 @@ Combine with UI for infinite scrolling:
         }
       }
     }
-  ],
+  },
   "sections": [
     {
       "components": [
@@ -603,7 +603,7 @@ Combine with UI for infinite scrolling:
 
 ```json
 {
-  "dataSources": [
+  "dataSources": {
     "salesSummary": {
       "url": "https://api.example.com/sales/summary",
       "method": "GET",
@@ -642,7 +642,7 @@ Combine with UI for infinite scrolling:
         }
       }
     }
-  ],
+  },
   "sections": [
     {
       "title": "Sales Overview",
@@ -759,10 +759,10 @@ Avoid hardcoding environment-specific URLs. Instead, provide the correct base UR
 Group related data sources and reference them clearly:
 ```json
 {
-  "dataSources": [
+  "dataSources": {
     "masterData"{"url": "...", "auth": {....}},
     "itemsList"{"url": "...", "auth": {....}}
-  ]
+  }
 }
 ```
 
