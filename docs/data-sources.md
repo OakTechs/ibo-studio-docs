@@ -375,7 +375,6 @@ Long feeds can opt into built-in pagination:
 
 ```json
 "sales": {
-  "id": "sales",
   "url": "https://api.example.com/sales",
   "method": "GET",
   "pagination": {
@@ -492,8 +491,7 @@ Combine with UI for infinite scrolling:
         }
       }
     },
-    {
-      "id": "activities",
+    "activities": {
       "url": "https://api.example.com/activities",
       "method": "GET",
       "auth": {
@@ -618,8 +616,7 @@ Combine with UI for infinite scrolling:
         }
       }
     },
-    {
-      "id": "recentOrders",
+    "recentOrders": {
       "url": "https://api.example.com/orders/recent",
       "method": "GET",
       "auth": {
@@ -635,8 +632,7 @@ Combine with UI for infinite scrolling:
         "pageSize": 10
       }
     },
-    {
-      "id": "inventory",
+    "inventory": {
       "url": "https://api.example.com/inventory/low-stock",
       "method": "GET",
       "auth": {
@@ -708,21 +704,16 @@ Combine with UI for infinite scrolling:
 
 ### 1. **Use Meaningful IDs**
 ```json
-{
-  "id": "userProfile"  // Good: descriptive
-}
+"userProfile": {....} // Good: descriptive
 ```
 vs
 ```json
-{
-  "id": "ds1"  // Bad: unclear
-}
+"ds1": {....}  // Bad: unclear
 ```
 
 ### 2. **Load Static Data Once**
 ```json
-{
-  "id": "countries",
+"countries": {
   "url": "https://api.example.com/countries",
   "once": true  // Country list doesn't change often
 }
