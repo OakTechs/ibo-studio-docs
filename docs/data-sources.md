@@ -56,7 +56,7 @@
 ```
 
 ### Required Keys
-- `id` – unique identifier for the data source
+- The key name (e.g., `"myData"`) serves as the unique identifier for the data source.
 - `url` – absolute or relative endpoint path
 - `method` – HTTP method: `GET`, `POST`, `PUT`, `PATCH`
 

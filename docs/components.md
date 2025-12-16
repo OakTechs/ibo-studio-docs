@@ -695,7 +695,7 @@ Display formatted text content with flexible alignment, styling, and Markdown su
     "mode": "Markdown",
     "width": "Fill",
     "align": "center",
-    "hidden": "false",
+    "hidden": false,
     "top": 20,
     "left": 20
   }
@@ -708,7 +708,7 @@ Display formatted text content with flexible alignment, styling, and Markdown su
 - `mode` – rendering mode: `"Markdown"` for rich text formatting, or `"plain"` text (default)
 - `width` – width behavior: `"Fill"` or `"Fixed"`
 - `align` – text alignment: `"left"`, `"center"`, or `"right"`
-- `hidden` – visibility control: `"true"` or `"false"` (can be bound to state for conditional display)
+- `hidden` – visibility control: `true` or `false` (can be bound to state for conditional display)
 - `top` / `left` – positioning coordinates (in pixels)
 
 **Common Patterns**
