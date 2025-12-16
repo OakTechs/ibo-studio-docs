@@ -320,6 +320,129 @@ Display data in expandable cards with search, pagination, and rich metadata. Eac
 - Use `visibleKey` on action buttons to show contextual actions per item
 - Keep `pageSize` between 15-50 for optimal performance on mobile
 
+## List
+
+Display a simple vertical list of items with title, subtitle, and caption fields. Ideal for lightweight data presentation without the complexity of expandable cards.
+
+```json
+{
+  "type": "list",
+  "props": {
+    "itemTitle": "text",
+    "itemSubtitle": "description",
+    "itemCaption": "caption",
+    "top": 20,
+    "left": 20,
+    "hidden": false,
+    "width": "Fill"
+  },
+  "data": {
+    "items": [
+      {
+        "text": "Title 01",
+        "description": "Description 01",
+        "caption": "Caption 01"
+      },
+      {
+        "text": "Title 02",
+        "description": "Description 02",
+        "caption": "Caption 02"
+      }
+    ]
+  }
+}
+```
+
+**Key Properties**
+
+- `itemTitle` – field name for the main title of each list item (default: `"text"`)
+- `itemSubtitle` – field name for the subtitle/description (default: `"description"`)
+- `itemCaption` – field name for the caption/additional text (default: `"caption"`)
+- `width` – width behavior: `"Fill"` (full width) or `"Wrap"` (fit content)
+- `hidden` – visibility control: `true` or `false` (can be bound to state)
+- `top` / `left` – positioning coordinates (in pixels)
+
+**Dynamic Data Binding**
+
+With data source:
+
+```json
+{
+  "type": "list",
+  "props": {
+    "itemTitle": "name",
+    "itemSubtitle": "email",
+    "itemCaption": "role",
+    "width": "Fill"
+  },
+  "data": {
+    "source": "users"
+  }
+}
+```
+
+With state binding:
+
+```json
+{
+  "type": "list",
+  "props": {
+    "itemTitle": "product_name",
+    "itemSubtitle": "category",
+    "itemCaption": "price",
+    "width": "Fill"
+  },
+  "data": {
+    "items": "@state.productList"
+  }
+}
+```
+
+**Common Patterns**
+
+Contact list:
+
+```json
+{
+  "type": "list",
+  "props": {
+    "itemTitle": "name",
+    "itemSubtitle": "phone",
+    "itemCaption": "email",
+    "width": "Fill"
+  },
+  "data": {
+    "source": "contacts"
+  }
+}
+```
+
+Task list:
+
+```json
+{
+  "type": "list",
+  "props": {
+    "itemTitle": "task_name",
+    "itemSubtitle": "assigned_to",
+    "itemCaption": "due_date",
+    "width": "Fill"
+  },
+  "data": {
+    "source": "tasks"
+  }
+}
+```
+
+**Tips**
+
+- Use for simple, read-only lists without interaction requirements
+- For expandable details, use `ExpandableCardList` instead
+- Keep list items concise; all three text fields (title, subtitle, caption) are displayed
+- Bind to data sources or state for dynamic content
+- Use `hidden` property with state bindings for conditional display
+- Perfect for simple contact lists, menu items, notifications, or activity feeds
+
 ## SearchBar
 
 Surface lightweight filtering in the same section as your list.
@@ -560,9 +683,119 @@ Surface KPI-style values computed from state or data.
 
 Place summary cards before forms so users see totals update live.
 
-## Text + Divider
+## Text
 
-`Text` uses style tokens (`title`, `subtitle`, `body`, `caption`) to keep typography consistent. Pair with `Divider` to separate logical groups without overwhelming the layout.
+Display formatted text content with flexible alignment, styling, and Markdown support.
+
+```json
+{
+  "type": "Text",
+  "props": {
+    "text": "👋 Hello",
+    "mode": "Markdown",
+    "width": "Fill",
+    "align": "center",
+    "hidden": false,
+    "top": 20,
+    "left": 20
+  }
+}
+```
+
+**Key Properties**
+
+- `text` – the text content to display (supports emojis, special characters, and dynamic bindings like `@state` or `@datasource`)
+- `mode` – rendering mode: `"Markdown"` for rich text formatting, or `"plain"` text (default)
+- `width` – width behavior: `"Fill"` or `"Fixed"`
+- `align` – text alignment: `"left"`, `"center"`, or `"right"`
+- `hidden` – visibility control: `true` or `false` (can be bound to state for conditional display)
+- `top` / `left` – positioning coordinates (in pixels)
+
+**Common Patterns**
+
+Dynamic text with state binding:
+
+```json
+{
+  "type": "Text",
+  "props": {
+    "text": "Welcome, @state.username!",
+    "mode": "Markdown",
+    "align": "left"
+  }
+}
+```
+
+Conditional visibility:
+
+```json
+{
+  "type": "Text",
+  "props": {
+    "text": "Error: Please fix the form",
+    "align": "center",
+    "hidden": "@state.isValid"
+  }
+}
+```
+
+**Tips**
+
+- Use `mode: "Markdown"` to enable rich text formatting (bold, italic, links, etc.)
+- Set `width: "Fill"` for full-width text blocks; use `"Wrap"` for inline text
+- Leverage `hidden` property with state bindings for conditional rendering
+- Combine with `Divider` to separate logical sections
+
+## Divider
+
+Horizontal line separator for visually dividing content sections.
+
+```json
+{
+  "type": "Divider"
+}
+```
+
+**Usage**
+
+The Divider component creates a subtle horizontal line to separate logical groups of content without overwhelming the layout. It requires no additional properties and automatically spans the container width.
+
+**Common Patterns**
+
+Between form sections:
+
+```json
+{
+  "components": [
+    {
+      "type": "Text",
+      "props": { "text": "Personal Information" }
+    },
+    {
+      "type": "TextField",
+      "props": { "name": "firstName", "label": "First Name" }
+    },
+    {
+      "type": "Divider"
+    },
+    {
+      "type": "Text",
+      "props": { "text": "Contact Details" }
+    },
+    {
+      "type": "TextField",
+      "props": { "name": "email", "label": "Email" }
+    }
+  ]
+}
+```
+
+**Tips**
+
+- Use sparingly to avoid visual clutter
+- Best for separating major content sections or groupings
+- Pairs well with section headings using `Text` component
+- Automatically inherits theme colors for consistency
 
 ## TextField
 
@@ -949,7 +1182,7 @@ Auto-populate related fields:
 
 ## DateField
 
-Native date picker with extensive customization options for forms and data entry.
+Native date and datetime picker with extensive customization options for forms and data entry. Supports date-only and date+time selection modes.
 
 ```json
 {
@@ -957,29 +1190,113 @@ Native date picker with extensive customization options for forms and data entry
   "props": {
     "name": "sale_date",
     "label": "Sale Date",
+    "mode": "date",
     "required": true,
-    "displayFormat": "long",
+    "displayFormat": "us",
+    "minDate": "today",
     "filled": true,
-    "prefixIcon": "event",
-    "suffixIcon": "calendar_today",
-    "hint": "Select sale date",
-    "minDate": "2024-01-01",
-    "maxDate": "today",
+    "fillColor": "#F5F5F5",
     "borderRadius": 12,
-    "primaryColor": "#6750A4"
+    "prefixIcon": "event",
+    "iconColor": "#6750A4",
+    "primaryColor": "#6750A4",
+    "helperText": "Select the sale date"
   }
 }
 ```
 
 **Key Properties**
 
-- `displayFormat` – controls visual presentation: `"default"` (ISO), `"us"` (MM/dd/yyyy), `"eu"` (dd/MM/yyyy), `"long"` (November 26, 2024), `"short"` (Nov 26, 2024), or `"custom"` with `customFormat` pattern
-- `minDate` / `maxDate` – constrain selectable range; use `"today"` or ISO strings like `"2024-01-01"`
+- `mode` – picker type: `"date"` (default, date only) or `"datetime"` (date + time selection)
+- `displayFormat` – visual presentation: `"default"` (yyyy-MM-dd), `"us"` (MM/dd/yyyy), `"eu"` (dd/MM/yyyy), `"long"` (December 15, 2025), `"short"` (Dec 15, 2025), or `"custom"` with `customFormat` pattern
+- `customFormat` – custom format string when `displayFormat: "custom"` (e.g., `"dd-MMM-yyyy"`, `"MMMM d, yyyy 'at' h:mm a"`)
+- `minDate` / `maxDate` – constrain selectable range; use `"today"` or ISO strings like `"2025-01-01"`
+- `initialDate` – which date calendar opens to; use `"today"` or ISO string (defaults to current date)
 - `yearRange` – years before/after current (default: 10); set to 100 for birth dates
 - `filled` – enable background fill for modern appearance
-- `borderRadius` – corner roundness (8-16 typical); pair with `borderColor` and `focusedBorderColor`
+- `fillColor` – background color for filled style (hex format)
+- `borderStyle` – border type: `"outline"`, `"underline"`, or `"none"`
+- `borderColor` / `focusedBorderColor` – border colors for default and focused states
+- `borderRadius` – corner roundness (8-16 typical)
+- `prefixIcon` / `suffixIcon` – Material icons (`event`, `calendar_today`, `date_range`, `schedule`, `access_time`)
+- `iconColor` – icon tint color (hex format)
 - `primaryColor` – theme color for calendar UI and selection highlights
-- `prefixIcon` / `suffixIcon` – Material icons (`event`, `calendar_today`, `date_range`)
+- `headerBackgroundColor` / `headerTextColor` – calendar header styling
+- `calendarHelpText` – help text shown in calendar dialog (default: "Select date")
+- `cancelText` / `confirmText` – button labels in calendar dialog
+- `onChange` – actions triggered when value changes
+
+**Mode: Date vs DateTime**
+
+Date mode (`mode: "date"`):
+
+```json
+{
+  "type": "DateField",
+  "props": {
+    "name": "order_date",
+    "label": "Order Date",
+    "mode": "date",
+    "displayFormat": "us"
+  }
+}
+```
+
+- Shows only date picker
+- Stored value: `"2025-12-15"` (ISO date string)
+- Display: `12/15/2025`
+
+DateTime mode (`mode: "datetime"`):
+
+```json
+{
+  "type": "DateField",
+  "props": {
+    "name": "appointment_time",
+    "label": "Appointment",
+    "mode": "datetime",
+    "displayFormat": "long"
+  }
+}
+```
+
+- Shows date picker followed by time picker
+- Stored value: `"2025-12-15T14:30:00.000Z"` (ISO datetime string)
+- Display: `December 15, 2025 14:30`
+
+**Display Format Options**
+
+Quick reference with examples for date `2025-12-15` and time `14:30`:
+
+- `"default"` → `2025-12-15` or `2025-12-15 14:30`
+- `"us"` → `12/15/2025` or `12/15/2025 14:30`
+- `"eu"` → `15/12/2025` or `15/12/2025 14:30`
+- `"long"` → `December 15, 2025` or `December 15, 2025 14:30`
+- `"short"` → `Dec 15, 2025` or `Dec 15, 2025 14:30`
+- `"custom"` → your pattern (e.g., `"dd-MMM-yyyy"` → `15-Dec-2025`)
+
+**Custom Format Tokens**
+
+Date tokens: `yyyy` (year), `MMM` (short month), `MMMM` (full month), `MM` (month number), `dd` (day), `d` (day no zero)
+
+Time tokens: `HH` (24h), `hh` (12h), `mm` (minute), `ss` (second), `a` (AM/PM)
+
+Examples:
+
+```json
+{
+  "displayFormat": "custom",
+  "customFormat": "dd/MM/yyyy"
+}
+// Output: 15/12/2025
+
+{
+  "displayFormat": "custom",
+  "customFormat": "MMMM d, yyyy 'at' h:mm a",
+  "mode": "datetime"
+}
+// Output: December 15, 2025 at 2:30 PM
+```
 
 **Common Patterns**
 
@@ -989,86 +1306,204 @@ Birth date (past only):
 {
   "name": "birth_date",
   "label": "Date of Birth",
+  "required": true,
   "maxDate": "today",
   "yearRange": 100,
-  "displayFormat": "long"
+  "displayFormat": "long",
+  "prefixIcon": "cake",
+  "helperText": "Must be 18 or older"
 }
 ```
 
-Future bookings:
+Future appointments with time:
 
 ```json
 {
-  "name": "appointment_date",
-  "label": "Appointment Date",
+  "name": "meeting_time",
+  "label": "Meeting Time",
+  "mode": "datetime",
+  "required": true,
   "minDate": "today",
-  "yearRange": 1,
-  "helperText": "Available dates: Mon-Fri"
+  "displayFormat": "custom",
+  "customFormat": "MMM d, yyyy 'at' h:mm a",
+  "prefixIcon": "schedule",
+  "helperText": "Schedule your meeting"
+}
+```
+
+Date range (start and end):
+
+```json
+{
+  "type": "FormGrid",
+  "props": {
+    "columns": 2,
+    "fields": [
+      {
+        "name": "start_date",
+        "label": "Start Date",
+        "required": true,
+        "minDate": "today",
+        "onChange": [
+          {
+            "type": "setState",
+            "key": "end_date",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "name": "end_date",
+        "label": "End Date",
+        "required": true,
+        "minDate": "@state.start_date",
+        "hint": "Must be after start date"
+      }
+    ]
+  }
+}
+```
+
+**Styling Examples**
+
+Filled style with no border:
+
+```json
+{
+  "filled": true,
+  "fillColor": "#F5F5F5",
+  "borderStyle": "none",
+  "borderRadius": 12
+}
+```
+
+Outline style with custom colors:
+
+```json
+{
+  "borderStyle": "outline",
+  "borderColor": "#2196F3",
+  "focusedBorderColor": "#1976D2",
+  "borderRadius": 12,
+  "labelColor": "#1976D2"
+}
+```
+
+Underline style:
+
+```json
+{
+  "borderStyle": "underline",
+  "borderColor": "#2196F3",
+  "focusedBorderColor": "#1976D2"
+}
+```
+
+**Advanced Patterns**
+
+Dynamic constraints from state:
+
+```json
+{
+  "name": "check_out",
+  "label": "Check-out Date",
+  "minDate": "@state.check_in",
+  "helperText": "Must be after check-in"
+}
+```
+
+Fetch data on date change:
+
+```json
+{
+  "name": "booking_date",
+  "label": "Booking Date",
+  "onChange": [
+    {
+      "type": "fetchData",
+      "source": "availableSlots",
+      "url": "/api/slots?date=@state.booking_date"
+    }
+  ]
 }
 ```
 
 **Tips**
 
-- Date values always stored as ISO strings (yyyy-MM-dd) regardless of display format
-- Use `helperText` to communicate date constraints clearly
-- Match `primaryColor` and `iconColor` to your theme for visual consistency
+- Date values stored as ISO strings (`yyyy-MM-dd` for date, ISO 8601 for datetime) regardless of display format
+- Use `mode: "datetime"` when you need both date and time selection
+- Set appropriate `displayFormat` to match user locale/preference
+- Use `"today"` for dynamic constraints instead of hardcoded dates
+- Keep `yearRange` at 10 for recent dates; increase to 100+ for birth dates
+- Use `helperText` to communicate date constraints and format expectations
+- Match `primaryColor`, `iconColor`, and border colors to your theme
 - Combine `filled: true` with light `fillColor` for Material Design 3 aesthetic
+- Use `initialDate` to guide users to relevant date ranges
+- Leverage `onChange` for cascading updates, validation, or fetching dependent data
+- Common icons: `event`, `calendar_today`, `calendar_month`, `schedule`, `date_range`, `access_time`
 
 ## CheckBox
 
-Boolean selection with a checkmark for agreements, toggles, and multi-select options.
+Multi-select checkbox group for choosing one or more options from a visible list.
 
 ```json
 {
-  "type": "CheckBox",
+  "type": "Checkbox",
   "props": {
-    "name": "acceptTerms",
-    "label": "I accept the terms and conditions",
-    "required": true
+    "name": "payment_options",
+    "label": "Payment Options",
+    "required": false,
+    "initialValue": ["include_tips"],
+    "options": [
+      { "label": "Include Tips in Net", "value": "include_tips" },
+      { "label": "Notify Customer", "value": "notify_customer" },
+      { "label": "Mark as Credit Sale", "value": "mark_credit" }
+    ]
   }
 }
 ```
 
 **Key Properties**
 
-- `name` – state key for the boolean value (`true`/`false`)
-- `label` – text displayed next to the checkbox
+- `name` – state key storing an array of selected values
+- `label` – text label displayed above the checkbox group
+- `options` – array of `{ "label": "...", "value": "..." }` objects
+- `initialValue` – array of pre-selected values (e.g., `["option1", "option2"]`)
 - `required` – adds asterisk (\*) to label for mandatory fields
-- `initialValue` – pre-check the box; supports boolean or `@state`/`@datasource` references
-- `onChange` – trigger actions when checked/unchecked
+- `onChange` – trigger actions when selections change
 
 **Common Patterns**
 
-Terms acceptance:
+User preferences:
 
 ```json
 {
-  "name": "consent",
-  "label": "I consent to data processing",
-  "required": true
+  "type": "Checkbox",
+  "props": {
+    "name": "notifications",
+    "label": "Notification Preferences",
+    "initialValue": ["email"],
+    "options": [
+      { "label": "Email Notifications", "value": "email" },
+      { "label": "SMS Alerts", "value": "sms" },
+      { "label": "Push Notifications", "value": "push" }
+    ]
+  }
 }
 ```
 
-Multi-select preferences:
+Feature toggles:
 
 ```json
 {
-  "type": "FormGrid",
+  "type": "Checkbox",
   "props": {
-    "columns": 1,
-    "fields": [
-      {
-        "type": "CheckBox",
-        "props": { "name": "newsletter", "label": "Subscribe to newsletter" }
-      },
-      {
-        "type": "CheckBox",
-        "props": { "name": "updates", "label": "Receive product updates" }
-      },
-      {
-        "type": "CheckBox",
-        "props": { "name": "promotions", "label": "Receive promotional offers" }
-      }
+    "name": "features",
+    "label": "Enable Features",
+    "options": [
+      { "label": "Auto-save", "value": "autosave" },
+      { "label": "Dark Mode", "value": "dark_mode" },
+      { "label": "Analytics", "value": "analytics" }
     ]
   }
 }
@@ -1076,9 +1511,11 @@ Multi-select preferences:
 
 **Tips**
 
-- Use for agreements, consents, and independent boolean choices
-- Store values as `@state.<name>` for form submission
-- Prefer `Switch` for settings with immediate effect; use `CheckBox` for form submissions
+- Selected values are stored as an array in `@state.<name>`
+- Use when users can select multiple independent options
+- For single selection, use `RadioGroup` instead
+- Keep option count under 7 for better scannability
+- Prefer `Switch` for settings with immediate effect; use `Checkbox` for form submissions
 
 ## RadioGroup
 
@@ -1260,6 +1697,7 @@ With API sync:
   "props": {
     "text": "Submit",
     "icon": "send",
+    "type": "Primary",
     "action": {
       "type": "submit",
       "url": "https://api.example.com/orders",
@@ -1290,6 +1728,7 @@ With API sync:
 
 Actions support composable side effects:
 
+- `type` – button style: `"Primary"` OR `"Secondary"`
 - `snack` – toast/snackbar notifications.
 - `setState` – reset form fields or prime defaults.
 - `navigate` – move to another section or screen.
