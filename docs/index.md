@@ -1,304 +1,207 @@
-# ============================================================================
-#
-# The configuration produced by default is meant to highlight the features
-# that Zensical provides and to serve as a starting point for your own
-# projects.
-#
-# ============================================================================
+# IBO Studio Documentation
 
-[project]
+Welcome to **IBO Studio**, a powerful visual builder for creating micro apps without writing code. Build beautiful, data-driven mobile experiences using an intuitive drag-and-drop interface and JSON-based configuration.
 
-# The site_name is shown in the page header and the browser window title
-#
-# Read more: https://zensical.org/docs/setup/basics/#site_name
-site_name = "Documentation"
+## What is IBO Studio?
 
-# The site_description is included in the HTML head and should contain a
-# meaningful description of the site content for use by search engines.
-#
-# Read more: https://zensical.org/docs/setup/basics/#site_description
-site_description = "A new project generated from the default template project."
+IBO Studio is a no-code platform that empowers developers, designers, and product teams to rapidly build and deploy micro apps for mobile devices. Instead of writing thousands of lines of code, you visually compose apps using pre-built components and configure them with JSON.
 
-# The site_author attribute. This is used in the HTML head element.
-#
-# Read more: https://zensical.org/docs/setup/basics/#site_author
-site_author = "<your name here>"
+### Key Features
 
-# The site_url is the canonical URL for your site. When building online
-# documentation you should set this.
-# Read more: https://zensical.org/docs/setup/basics/#site_url
-site_url = "https://oaktechs.github.io/ibo-studio-docs/"
+🎨 **Visual Drag-and-Drop Editor**
+- Intuitive canvas with real-time phone preview
+- Component tree for hierarchical navigation
+- Live updates as you build
 
-# The copyright notice appears in the page footer and can contain an HTML
-# fragment.
-#
-# Read more: https://zensical.org/docs/setup/basics/#copyright
-copyright = """
-Copyright &copy; 2025 The authors
-"""
+📱 **Real-Time Mobile Preview**
+- See exactly what users will experience
+- Test interactions instantly
+- Responsive layout preview
 
-# Zensical supports both implicit navigation and explicitly defined navigation.
-# If you decide not to define a navigation here then Zensical will simply
-# derive the navigation structure from the directory structure of your
-# "docs_dir". The definition below demonstrates how a navigation structure
-# can be defined using TOML syntax.
-#
-# Read more: https://zensical.org/docs/setup/navigation/
-# nav = [
-#   { "Get started" = "index.md" },
-#   { "Markdown in 5min" = "markdown.md" },
-# ]
+🧩 **Rich Component Library**
+- 20+ pre-built components including forms, lists, cards, navigation, and data displays
+- Fully customizable properties for each component
+- Support for complex layouts and nested components
 
-# With the "extra_css" option you can add your own CSS styling to customize
-# your Zensical project according to your needs. You can add any number of
-# CSS files.
-#
-# The path provided should be relative to the "docs_dir".
-#
-# Read more: https://zensical.org/docs/customization/#additional-css
-#
-#extra_css = ["assets/stylesheets/extra.css"]
+⚡ **JSON-Based Configuration**
+- Human-readable app structure
+- Easy version control and collaboration
+- Export/import for reusability
 
-# With the `extra_javascript` option you can add your own JavaScript to your
-# project to customize the behavior according to your needs.
-#
-# The path provided should be relative to the "docs_dir".
-#
-# Read more: https://zensical.org/docs/customization/#additional-javascript
-#extra_javascript = ["assets/javascript/extra.js"]
+🔗 **Dynamic Data Binding**
+- Connect to REST APIs, databases (MySQL, PostgreSQL)
+- State management with `@state.*` expressions
+- Data source bindings with `@datasource.*` expressions
 
-# ----------------------------------------------------------------------------
-# Section for configuring theme options
-# ----------------------------------------------------------------------------
-[project.theme]
+💾 **Version Control & Publishing**
+- Auto-save drafts every 30 seconds
+- Publish versioned releases with one click
+- Version history with preview and restore capabilities
 
-# change this to "classic" to use the traditional Material for MkDocs look.
-#variant = "classic"
+📊 **Data Sources**
+- HTTP/REST API integration
+- Database connections (MySQL, PostgreSQL)
+- Static data support
+- Real-time data fetching and pagination
 
-# Zensical allows you to override specific blocks, partials, or whole
-# templates as well as to define your own templates. To do this, uncomment
-# the custom_dir setting below and set it to a directory in which you
-# keep your template overrides.
-#
-# Read more:
-# - https://zensical.org/docs/customization/#extending-the-theme
-#
-#custom_dir = "overrides"
+## How It Works
 
-# With the "favicon" option you can set your own image to use as the icon
-# browsers will use in the browser title bar or tab bar. The path provided
-# must be relative to the "docs_dir".
-#
-# Read more:
-# - https://zensical.org/docs/setup/logo-and-icons/#favicon
-# - https://developer.mozilla.org/en-US/docs/Glossary/Favicon
-#
-#favicon = "assets/images/favicon.png"
+1. **Create a Project** – Start a new micro app in the IBO Studio dashboard
+2. **Design Your Screens** – Use the visual editor to drag and drop components onto the canvas
+3. **Configure Components** – Set properties, bind data sources, and define actions using the properties panel
+4. **Connect Data** – Link your app to APIs or databases through the data sources manager
+5. **Test & Preview** – See changes instantly in the real-time phone preview
+6. **Publish** – Export your JSON configuration or publish versioned releases
 
-# Zensical supports more than 60 different languages. This means that the
-# labels and tooltips that Zensical's templates produce are translated.
-# The "language" option allows you to set the language used. This language
-# is also indicated in the HTML head element to help with accessibility
-# and guide search engines and translation tools.
-#
-# The default language is "en" (English). It is possible to create
-# sites with multiple languages and configure a language selector. See
-# the documentation for details.
-#
-# Read more:
-# - https://zensical.org/docs/setup/language/
-#
-language = "en"
+## Getting Started
 
-# Zensical provides a number of feature toggles that change the behavior
-# of the documentation site.
-features = [
-    # Zensical includes an announcement bar. This feature allows users to
-    # dismiss it then they have read the announcement.
-    # https://zensical.org/docs/setup/header/#announcement-bar
-    "announce.dismiss",
+Explore the documentation using the navigation menu on the left, or jump directly to these essential sections:
 
-    # If you have a repository configured and turn feature this on, Zensical
-    # will generate an edit button for the page. This works for common
-    # repository hosting services.
-    # https://zensical.org/docs/setup/repository/#code-actions
-    #"content.action.edit",
+### Core Concepts
 
-    # If you have a repository configured and turn feature this on, Zensical
-    # will generate a button that allows the user to view the Markdown
-    # code for the current page.
-    # https://zensical.org/docs/setup/repository/#code-actions
-    #"content.action.view",
+- **[Screen JSON Overview](overview.md)** – Understand the JSON schema structure and config-driven philosophy
+- **[Components](components.md)** – Browse the complete component catalogue with examples
+- **[Sections & Navigation](sections-and-navigation.md)** – Learn how to structure screens and implement navigation
 
-    # Code annotations allow you to add an icon with a tooltip to your
-    # code blocks to provide explanations at crucial points.
-    # https://zensical.org/docs/authoring/code-blocks/#code-annotations
-    "content.code.annotate",
+### Building Apps
 
-    # This feature turns on a button in code blocks that allow users to
-    # copy the content to their clipboard without first selecting it.
-    # https://zensical.org/docs/authoring/code-blocks/#code-copy-button
-    "content.code.copy",
+- **[Data Sources](data-sources.md)** – Connect your app to APIs, databases, and static data
+- **[Expressions & Actions](expressions-and-actions.md)** – Master dynamic bindings, calculations, and user interactions
+- **[Build Playbook](build-playbook.md)** – Follow best practices and design patterns
 
-    # Code blocks can include a button to allow for the selection of line
-    # ranges by the user.
-    # https://zensical.org/docs/authoring/code-blocks/#code-selection-button
-    "content.code.select",
+### Reference
 
-    # Zensical can render footnotes as inline tooltips, so the user can read
-    # the footnote without leaving the context of the document.
-    # https://zensical.org/docs/authoring/footnotes/#footnote-tooltips
-    "content.footnote.tooltips",
+- **[Reference Template](reference-template.md)** – Templates and next steps for advanced usage
 
-    # If you have many content tabs that have the same titles (e.g., "Python",
-    # "JavaScript", "Cobol"), this feature causes all of them to switch to
-    # at the same time when the user chooses their language in one.
-    # https://zensical.org/docs/authoring/content-tabs/#linked-content-tabs
-    "content.tabs.link",
+## The IBO Studio Editor
 
-    # TODO: not sure I understand this one? Is there a demo of this in the docs?
-    # https://zensical.org/docs/authoring/tooltips/#improved-tooltips
-    "content.tooltips",
+The editor interface consists of several key areas:
 
-    # With this feature enabled, Zensical will automatically hide parts
-    # of the header when the user scrolls past a certain point.
-    # https://zensical.org/docs/setup/header/#automatic-hiding
-    # "header.autohide",
+### Left Sidebar
+- **Component Tree** – Hierarchical view of all components on the current screen
+- **Code View** – Direct JSON editing with real-time validation
+- **Data Sources** – Manage API connections and database queries
 
-    # Turn on this feature to expand all collapsible sections in the
-    # navigation sidebar by default.
-    # https://zensical.org/docs/setup/navigation/#navigation-expansion
-    # "navigation.expand",
+### Center Canvas
+- **Phone Frame** – Visual preview of your app in a mobile device frame
+- **Interactive Elements** – Click, drag, and position components
+- **Real-Time Rendering** – See changes as you make them
 
-    # This feature turns on navigation elements in the footer that allow the
-    # user to navigate to a next or previous page.
-    # https://zensical.org/docs/setup/footer/#navigation
-    "navigation.footer",
+### Right Sidebar
+- **Properties Panel** – Configure selected component properties
+- **Styling Options** – Colors, sizes, spacing, and typography
+- **Data Bindings** – Link components to data sources and state
 
-    # When section index pages are enabled, documents can be directly attached
-    # to sections, which is particularly useful for providing overview pages.
-    # https://zensical.org/docs/setup/navigation/#section-index-pages
-    "navigation.indexes",
+### Top Toolbar
+- **Save & Publish** – Auto-save indicator and publish button
+- **Preview Mode** – Test your app interactions
+- **Version History** – Access previous versions
 
-    # When instant navigation is enabled, clicks on all internal links will be
-    # intercepted and dispatched via XHR without fully reloading the page.
-    # https://zensical.org/docs/setup/navigation/#instant-navigation
-    "navigation.instant",
+## Component Overview
 
-    # With instant prefetching, your site will start to fetch a page once the
-    # user hovers over a link. This will reduce the perceived loading time
-    # for the user.
-    # https://zensical.org/docs/setup/navigation/#instant-prefetching
-    "navigation.instant.prefetch",
+IBO Studio provides a comprehensive library of components:
 
-    # In order to provide a better user experience on slow connections when
-    # using instant navigation, a progress indicator can be enabled.
-    # https://zensical.org/docs/setup/navigation/#progress-indicator
-    #"navigation.instant.progress",
+**Layout Components**
+- TabContainer – Organize content into switchable tabs
+- CustomCard – Flexible card container with headers and borders
+- FormGrid – Responsive multi-column form layouts
 
-    # When navigation paths are activated, a breadcrumb navigation is rendered
-    # above the title of each page
-    # https://zensical.org/docs/setup/navigation/#navigation-path
-    "navigation.path",
+**Data Display**
+- ExpandableCardList – Rich cards with search, pagination, and expand/collapse
+- CardImage – Image cards for products, profiles, and content
+- List – Simple vertical lists
+- SummaryCard – KPI displays and summary information
+- Text – Formatted text with Markdown support
 
-    # When pruning is enabled, only the visible navigation items are included
-    # in the rendered HTML, reducing the size of the built site by 33% or more.
-    # https://zensical.org/docs/setup/navigation/#navigation-pruning
-    #"navigation.prune",
+**Form Inputs**
+- TextField – Text input with validation and keyboard types
+- Dropdown – Select from static or dynamic options
+- DateField – Date and datetime picker
+- CheckBox – Multi-select options
+- RadioGroup – Single selection from options
+- Switch – Toggle on/off settings
+- ChipSelect – Chip-based selection
+- RichTextEditor – Formatted text editing
 
-    # When sections are enabled, top-level sections are rendered as groups in
-    # the sidebar for viewports above 1220px, but remain as-is on mobile.
-    # https://zensical.org/docs/setup/navigation/#navigation-sections
-    "navigation.sections",
+**Navigation & Actions**
+- SearchBar – Filter and search functionality
+- Button – Primary and secondary actions
+- FloatingActionButton – Prominent primary action
+- Divider – Visual section separator
 
-    # When tabs are enabled, top-level sections are rendered in a menu layer
-    # below the header for viewports above 1220px, but remain as-is on mobile.
-    # https://zensical.org/docs/setup/navigation/#navigation-tabs
-    #"navigation.tabs",
+Each component supports data binding, state management, and action triggers.
 
-    # When sticky tabs are enabled, navigation tabs will lock below the header
-    # and always remain visible when scrolling down.
-    # https://zensical.org/docs/setup/navigation/#sticky-navigation-tabs
-    #"navigation.tabs.sticky",
+## JSON Configuration
 
-    # A back-to-top button can be shown when the user, after scrolling down,
-    # starts to scroll up again.
-    # https://zensical.org/docs/setup/navigation/#back-to-top-button
-    "navigation.top",
+IBO Studio apps are defined using a JSON schema that includes:
 
-    # When anchor tracking is enabled, the URL in the address bar is
-    # automatically updated with the active anchor as highlighted in the table
-    # of contents.
-    # https://zensical.org/docs/setup/navigation/#anchor-tracking
-    "navigation.tracking",
+```json
+{
+  "version": 1,
+  "type": "screen",
+  "title": "My Micro App",
+  "state": {},
+  "dataSources": {},
+  "bottomNav": {
+    "items": []
+  },
+  "sections": []
+}
+```
 
-    # When search highlighting is enabled and a user clicks on a search result,
-    # Zensical will highlight all occurrences after following the link.
-    # https://zensical.org/docs/setup/search/#search-highlighting
-    "search.highlight",
+This config-driven approach enables:
+- ✅ Version control with Git
+- ✅ Code review and collaboration
+- ✅ Reusable templates and patterns
+- ✅ Dynamic updates without redeployment
+- ✅ Cross-team alignment on UI contracts
 
-    # When anchor following for the table of contents is enabled, the sidebar
-    # is automatically scrolled so that the active anchor is always visible.
-    # https://zensical.org/docs/setup/navigation/#anchor-following
-    # "toc.follow",
+## Use Cases
 
-    # When navigation integration for the table of contents is enabled, it is
-    # always rendered as part of the navigation sidebar on the left.
-    # https://zensical.org/docs/setup/navigation/#navigation-integration
-    #"toc.integrate",
-]
+IBO Studio is perfect for building:
 
-# ----------------------------------------------------------------------------
-# In the "palette" subsection you can configure options for the color scheme.
-# You can configure different color # schemes, e.g., to turn on dark mode,
-# that the user can switch between. Each color scheme can be further
-# customized.
-#
-# Read more:
-# - https://zensical.org/docs/setup/colors/
-# ----------------------------------------------------------------------------
-[[project.theme.palette]]
-scheme = "default"
-toggle.icon = "lucide/sun"
-toggle.name = "Switch to dark mode"
+- 📋 **Form-Based Apps** – Data collection, surveys, order entry
+- 📊 **Dashboard Apps** – KPI displays, analytics views
+- 📇 **Directory Apps** – Employee directories, product catalogs
+- 🛒 **E-Commerce Mini-Apps** – Product browsing, cart management
+- 📅 **Booking Apps** – Appointment scheduling, reservations
+- 📱 **Internal Tools** – Admin panels, workflow management
 
-[[project.theme.palette]]
-scheme = "slate"
-toggle.icon = "lucide/moon"
-toggle.name = "Switch to light mode"
+## Why IBO Studio?
 
-# ----------------------------------------------------------------------------
-# In the "font" subsection you can configure the fonts used. By default, fonts
-# are loaded from Google Fonts, giving you a wide range of choices from a set
-# of suitably licensed fonts. There are options for a normal text font and for
-# a monospaced font used in code blocks.
-# ----------------------------------------------------------------------------
-#[project.theme.font]
-#text = "Inter"
-#code = "Jetbrains Mono"
+**For Developers**
+- Reduce development time by 10x
+- Focus on business logic, not UI boilerplate
+- Easy maintenance and updates
+- Type-safe JSON schema
 
-# ----------------------------------------------------------------------------
-# You can configure your own logo to be shown in the header using the "logo"
-# option in the "icons" subsection. The logo can be a path to a file in your
-# "docs_dir" or it can be a path to an icon.
-#
-# Likewise, you can customize the logo used for the repository section of the
-# header. Zensical derives the default logo for this from the repository URL.
-# See below...
-#
-# There are other icons you can customize. See the documentation for details.
-#
-# Read more:
-# - https://zensical.org/docs/setup/logo-and-icons
-# - https://zensical.org/docs/authoring/icons-emojis/#search
-# ----------------------------------------------------------------------------
-#[project.theme.icon]
-#logo = "lucide/smile"
-#repo = "lucide/smile"
+**For Designers**
+- Full control over visual appearance
+- Rapid prototyping and iteration
+- Consistent design system
+- Real-time preview
 
-# ----------------------------------------------------------------------------
-# The "extra" section contains miscellaneous settings.
-# ----------------------------------------------------------------------------
-#[[project.extra.social]]
-#icon = "fontawesome/brands/github"
-#link = "https://github.com/user/repo"
+**For Product Teams**
+- Faster time to market
+- A/B test UI variations easily
+- Update content without deployments
+- Collaborate with clear specifications
+
+## Quick Links
+
+- 🚀 [Get Started with Your First App](build-playbook.md)
+- 📚 [Component Reference](components.md)
+- 🔧 [Data Binding Guide](expressions-and-actions.md)
+- 💡 [Best Practices](build-playbook.md)
+
+## Support & Community
+
+- **GitHub Issues** – Report bugs or request features
+- **Documentation Updates** – This documentation is continuously updated
+- **Examples** – Check the reference templates for working examples
+
+---
+
+**Ready to build?** Start by exploring the [Screen JSON Overview](overview.md) to understand the core concepts, then dive into the [Components](components.md) catalogue to see what's possible.
+
+*Last updated: December 2025*
