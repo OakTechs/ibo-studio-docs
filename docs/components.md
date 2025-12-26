@@ -236,7 +236,7 @@ Display data in expandable cards with search, pagination, and rich metadata. Eac
 - `headerChips` – array of field names to display as chips below subtitle
 - `chipLabels` – custom labels for chip fields (maps field names to display text)
 
-**Search Integration**
+<!-- **Search Integration**
 
 ```json
 {
@@ -276,7 +276,7 @@ Display data in expandable cards with search, pagination, and rich metadata. Eac
 - `manualPagination` – enable client-side pagination (default: true)
 - `pageSize` – items per page (default: 50)
 - `autoLoadMoreOnScroll` – load more when scrolling near bottom (default: true)
-- `manualKey` – unique ID for pagination state (auto-generated if omitted)
+- `manualKey` – unique ID for pagination state (auto-generated if omitted) -->
 
 **Action Buttons**
 
@@ -314,11 +314,11 @@ Display data in expandable cards with search, pagination, and rich metadata. Eac
 
 - Reserve chips for high-signal fields; too many chips reduce scannability
 - Use `chipLabels` to translate backend keys into human-friendly text
-- Pair with `SearchBar` component using matching `searchStateKey` for filtering
+<!-- - Pair with `SearchBar` component using matching `searchStateKey` for filtering -->
 - Set unique `manualKey` when using multiple lists with the same data source
 - All item fields display in alphabetical key-value table when card expands
 - Use `visibleKey` on action buttons to show contextual actions per item
-- Keep `pageSize` between 15-50 for optimal performance on mobile
+<!-- - Keep `pageSize` between 15-50 for optimal performance on mobile -->
 
 ## List
 
