@@ -62,6 +62,7 @@ Explore the documentation using the navigation menu on the left, or jump directl
 - **[Screen JSON Overview](overview.md)** – Understand the JSON schema structure and config-driven philosophy
 - **[Components](components.md)** – Browse the complete component catalogue with examples
 - **[Sections & Navigation](sections-and-navigation.md)** – Learn how to structure screens and implement navigation
+- **[Customization & Theming](customization.md)** – Master the palette, typography, and component customization system
 
 ### Building Apps
 
